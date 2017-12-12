@@ -26,9 +26,13 @@ class CustomRecycleView @JvmOverloads constructor(
                 println("scrollY = $scrollY")
                 println("height = $height")
 
-                val dy = (child.top + child.height / 2) - (scrollY + height / 2 - paddingBottom - paddingTop)
-
-                smoothScrollBy(0, dy)
+                if (isVertical()) {
+                    val dy = (child.top + child.height / 2) - (scrollY + height / 2 - paddingBottom - paddingTop)
+                    smoothScrollBy(0, dy)
+                } else {
+                    val dx = (child.left + child.width / 2) - (scrollX + width / 2 - paddingLeft - paddingRight)
+                    smoothScrollBy(dx, 0)
+                }
             }
         }
         super.requestChildFocus(child, focused)
@@ -168,6 +172,21 @@ class CustomRecycleView @JvmOverloads constructor(
                 vh1?.itemView?.requestFocus()
             }
         }
+    }
+
+    fun isVertical(): Boolean {
+        val lm = layoutManager
+        if (lm != null) {
+            if (lm is LinearLayoutManager) {
+                return LinearLayoutManager.VERTICAL == lm.orientation
+            }
+            if (lm is GridLayoutManager) {
+                return GridLayoutManager.VERTICAL == lm.orientation
+            }
+
+            return lm.canScrollVertically()
+        }
+        return false
     }
 }
 

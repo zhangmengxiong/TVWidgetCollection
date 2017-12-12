@@ -41,7 +41,7 @@ class RecycleFocusActivity : Activity(), RecyclerViewTV.OnItemListener {
 
         val adapter = MyRecycleAdapt(list)
         val gridlayoutManager = LinearLayoutManager(this) // 解决快速长按焦点丢失问题.
-        gridlayoutManager.orientation = LinearLayoutManager.VERTICAL
+        gridlayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 //        recycleView.setOnItemListener(this)
 //        recycleView.setOnItemClickListener { parent, itemView, position ->
 //
@@ -87,8 +87,8 @@ class RecycleFocusActivity : Activity(), RecyclerViewTV.OnItemListener {
 
         focusView.setBaseAnimator(MoveFocusAnimator())
 
-        btn.setOnKey { _, keyCode ->
-            when (keyCode) {
+        btn.setOnKey {
+            when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
                     recycleView.setDefaultSelect(recycleView.findFirstVisibleItemPosition())
                     true

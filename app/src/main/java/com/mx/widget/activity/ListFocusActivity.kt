@@ -2,12 +2,13 @@ package com.mx.widget.activity
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.AbsListView
 import android.widget.AdapterView
 import com.mx.widget.R
 import com.mx.widget.adapts.MyListAdapt
-import com.mx.widget.animator.MoveFocusAnimator
+import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.list_focus_activity.*
 
 
@@ -22,7 +23,22 @@ class ListFocusActivity : Activity() {
         rootLay.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
             if (newFocus is AbsListView) {
                 newFocus.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-                    override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int,
+                                                bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                        newFocus.removeOnLayoutChangeListener(this)
+                        newFocus.selectedView?.let { focusView.setFocusView(it) }
+                    }
+                })
+            } else {
+                focusView.setFocusView(newFocus)
+            }
+        }
+        rootLay.viewTreeObserver.addOnScrollChangedListener {
+            val newFocus = rootLay.findFocus() ?: return@addOnScrollChangedListener
+            if (newFocus is AbsListView) {
+                newFocus.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+                    override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int,
+                                                bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                         newFocus.removeOnLayoutChangeListener(this)
                         try {
                             focusView.setFocusView(newFocus.selectedView)
@@ -31,28 +47,40 @@ class ListFocusActivity : Activity() {
                         }
                     }
                 })
-                newFocus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        focusView.visibility = View.GONE
-                    }
-
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        view?.let { focusView.setFocusView(it) }
-                    }
-                }
-
             } else {
                 focusView.setFocusView(newFocus)
             }
         }
 
         val list = ArrayList<String>()
-        (0..1000).forEach {
+        (0..100).forEach {
             list.add(it.toString())
         }
         val adapter = MyListAdapt(list)
         listView.adapter = adapter
+        listView.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                        focusView.visibility = View.GONE
+            }
 
-        focusView.setBaseAnimator(MoveFocusAnimator())
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                view?.let { focusView.setFocusView(it) }
+            }
+        }
+//        focusView.setBaseAnimator(MoveFocusAnimator())
+
+        btn.setOnKey {
+            when (it) {
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    listView.setSelection(98)
+                    listView.invalidate()
+                    listView.post { listView.requestFocus() }
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 }

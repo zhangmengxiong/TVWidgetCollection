@@ -21,7 +21,7 @@ abstract class BaseRecycleAdapt<T>(private val list: ArrayList<T>) : RecyclerVie
         bindView(position, holder, item)
     }
 
-    fun getItem(position: Int): T = list[position]
+    protected fun getItem(position: Int): T = list[position]
 
     override fun getItemCount(): Int {
         return list.size
