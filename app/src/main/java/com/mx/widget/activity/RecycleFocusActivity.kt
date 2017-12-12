@@ -2,7 +2,6 @@ package com.mx.widget.activity
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
@@ -41,7 +40,7 @@ class RecycleFocusActivity : Activity(), RecyclerViewTV.OnItemListener {
         }
 
         val adapter = MyRecycleAdapt(list)
-        val gridlayoutManager = GridLayoutManager(this, 4) // 解决快速长按焦点丢失问题.
+        val gridlayoutManager = LinearLayoutManager(this) // 解决快速长按焦点丢失问题.
         gridlayoutManager.orientation = LinearLayoutManager.VERTICAL
 //        recycleView.setOnItemListener(this)
 //        recycleView.setOnItemClickListener { parent, itemView, position ->
@@ -60,13 +59,18 @@ class RecycleFocusActivity : Activity(), RecyclerViewTV.OnItemListener {
             override fun onItemClick(position: Int, view: View) {
                 println("$position is Click")
             }
+
+            override fun onKeyDown(): Boolean {
+                println("向下焦点")
+                return true
+            }
         })
         recycleView.postDelayed({
             recycleView.setDefaultSelect(95)
         }, 2000)
 
 //        recycleView.setSelectedItemOffset(111, 111)
-//        recycleView.setSelectedItemAtCentered(true)
+        recycleView.setSelectedItemAtCentered(true)
 
         with(rootLay.viewTreeObserver) {
             addOnGlobalFocusChangeListener { oldFocus, newFocus ->
@@ -86,7 +90,7 @@ class RecycleFocusActivity : Activity(), RecyclerViewTV.OnItemListener {
         btn.setOnKey { _, keyCode ->
             when (keyCode) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    recycleView.setDefaultSelect(recycleView.findFirstVisibleItemPosition() + 3)
+                    recycleView.setDefaultSelect(recycleView.findFirstVisibleItemPosition())
                     true
                 }
                 else -> false

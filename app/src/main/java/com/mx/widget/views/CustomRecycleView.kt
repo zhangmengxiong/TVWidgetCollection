@@ -35,7 +35,7 @@ class CustomRecycleView @JvmOverloads constructor(
     }
 
     private var focusCenterInView = false
-    fun setFocusCenter(center: Boolean) {
+    fun setSelectedItemAtCentered(center: Boolean) {
         focusCenterInView = center
     }
 
@@ -62,43 +62,31 @@ class CustomRecycleView @JvmOverloads constructor(
                 when (keyCode) {
                     KeyEvent.KEYCODE_DPAD_LEFT -> {
                         println("KEYCODE_DPAD_LEFT")
-                        FocusFinder.getInstance()
-                                .findNextFocus(this, focusedChild, View.FOCUS_LEFT)
-                                ?.let {
-                                    if (recycleCall?.onKeyLeft() == true) {
-                                        return true
-                                    }
-                                }
+                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_LEFT) == null
+                                && recycleCall?.onKeyLeft() == true) {
+                            return true
+                        }
                     }
                     KeyEvent.KEYCODE_DPAD_RIGHT -> {
                         println("KEYCODE_DPAD_RIGHT")
-                        FocusFinder.getInstance()
-                                .findNextFocus(this, focusedChild, View.FOCUS_RIGHT)
-                                ?.let {
-                                    if (recycleCall?.onKeyRight() == true) {
-                                        return true
-                                    }
-                                }
+                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_RIGHT) == null
+                                && recycleCall?.onKeyRight() == true) {
+                            return true
+                        }
                     }
                     KeyEvent.KEYCODE_DPAD_UP -> {
                         println("KEYCODE_DPAD_UP")
-                        FocusFinder.getInstance()
-                                .findNextFocus(this, focusedChild, View.FOCUS_UP)
-                                ?.let {
-                                    if (recycleCall?.onKeyUp() == true) {
-                                        return true
-                                    }
-                                }
+                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_UP) == null
+                                && recycleCall?.onKeyUp() == true) {
+                            return true
+                        }
                     }
                     KeyEvent.KEYCODE_DPAD_DOWN -> {
                         println("KEYCODE_DPAD_DOWN")
-                        FocusFinder.getInstance()
-                                .findNextFocus(this, focusedChild, View.FOCUS_DOWN)
-                                ?.let {
-                                    if (recycleCall?.onKeyDown() == true) {
-                                        return true
-                                    }
-                                }
+                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_DOWN) == null
+                                && recycleCall?.onKeyDown() == true) {
+                            return true
+                        }
                     }
                     else -> {
 
