@@ -26,7 +26,9 @@ class ListFocusActivity : Activity() {
                     override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int,
                                                 bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                         newFocus.removeOnLayoutChangeListener(this)
-                        newFocus.selectedView?.let { focusView.setFocusView(it) }
+                        newFocus.selectedView?.let {
+                            it.bringToFront()
+                            focusView.setFocusView(it) }
                     }
                 })
             } else {

@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
-
 import com.mx.widget.animator.IBaseAnimator
 import com.mx.widget.animator.NoFocusAnimator
 
@@ -18,9 +16,10 @@ import com.mx.widget.animator.NoFocusAnimator
  */
 
 class FocusDashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : ImageView(context, attrs, defStyleAttr) {
+    : Draw9Bitmap(context, attrs, defStyleAttr) {
     init {
         initView(context)
+        mColorWidth = 20f
     }
 
     private var paddingRect: Rect? = null
@@ -53,7 +52,7 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
      */
     fun setFocusView(newFocus: View) {
         if (baseAnimator == null) baseAnimator = NoFocusAnimator()
-        if (paddingRect == null) paddingRect = Rect(40, 40, 38, 38)
+        if (paddingRect == null) paddingRect = Rect(mColorWidth.toInt(), mColorWidth.toInt(), mColorWidth.toInt(), mColorWidth.toInt())
 
         baseAnimator?.setOnFocusView(newFocus, this, paddingRect!!)
     }
