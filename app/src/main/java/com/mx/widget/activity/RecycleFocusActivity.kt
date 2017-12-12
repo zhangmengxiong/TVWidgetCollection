@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.KeyEvent
 import android.view.View
 import com.mx.widget.R
 import com.mx.widget.adapts.MyRecycleAdapt
 import com.mx.widget.animator.MoveFocusAnimator
 import com.mx.widget.views.RecycleCall
 import com.mx.widget.views.RecyclerViewTV
+import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.recycle_focus_activity.*
 
 /**
@@ -80,5 +82,16 @@ class RecycleFocusActivity : Activity(), RecyclerViewTV.OnItemListener {
         }
 
         focusView.setBaseAnimator(MoveFocusAnimator())
+
+        btn.setOnKey { _, keyCode ->
+            when (keyCode) {
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    recycleView.setDefaultSelect(recycleView.findFirstVisibleItemPosition() + 3)
+                    true
+                }
+                else -> false
+            }
+
+        }
     }
 }

@@ -19,17 +19,24 @@ class CustomRecycleView @JvmOverloads constructor(
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     override fun requestChildFocus(child: View?, focused: View?) {
-        child?.let {
-            println("top = ${child.top}")
-            println("height = ${child.height}")
-            println("scrollY = $scrollY")
-            println("height = $height")
+        if (focusCenterInView) {
+            child?.let {
+                println("top = ${child.top}")
+                println("height = ${child.height}")
+                println("scrollY = $scrollY")
+                println("height = $height")
 
-            val dy = (child.top + child.height / 2) - (scrollY + height / 2 - paddingBottom - paddingTop)
+                val dy = (child.top + child.height / 2) - (scrollY + height / 2 - paddingBottom - paddingTop)
 
-            smoothScrollBy(0, dy)
+                smoothScrollBy(0, dy)
+            }
         }
         super.requestChildFocus(child, focused)
+    }
+
+    private var focusCenterInView = false
+    fun setFocusCenter(center: Boolean) {
+        focusCenterInView = center
     }
 
     override fun onChildAttachedToWindow(child: View?) {
@@ -52,7 +59,6 @@ class CustomRecycleView @JvmOverloads constructor(
         event?.let {
             val keyCode = event.keyCode
             if (event.action == KeyEvent.ACTION_DOWN) {
-
                 when (keyCode) {
                     KeyEvent.KEYCODE_DPAD_LEFT -> {
                         println("KEYCODE_DPAD_LEFT")
@@ -115,7 +121,7 @@ class CustomRecycleView @JvmOverloads constructor(
     /**
      * 最后的位置.
      */
-    fun findLastVisibleItemPosition(): Int {
+    private fun findLastVisibleItemPosition(): Int {
         val layoutManager = layoutManager
         if (layoutManager != null) {
             if (layoutManager is LinearLayoutManager) {
@@ -144,7 +150,7 @@ class CustomRecycleView @JvmOverloads constructor(
         return RecyclerView.NO_POSITION
     }
 
-    private fun findFirstVisibleItemPosition(): Int {
+    fun findFirstVisibleItemPosition(): Int {
         val lm = layoutManager
         if (lm != null) {
             if (lm is LinearLayoutManager) {
@@ -163,11 +169,17 @@ class CustomRecycleView @JvmOverloads constructor(
         if (int !in first..last) {
             scrollToPosition(int)
         }
-        postDelayed({
-            val vh = findViewHolderForAdapterPosition(int)
+        val vh = findViewHolderForAdapterPosition(int)
+        if (vh?.itemView != null) {
             requestFocusFromTouch()
-            vh?.itemView?.requestFocus()
-        }, 100)
+            vh.itemView?.requestFocus()
+        } else {
+            post {
+                val vh1 = findViewHolderForAdapterPosition(int)
+                requestFocusFromTouch()
+                vh1?.itemView?.requestFocus()
+            }
+        }
     }
 }
 
