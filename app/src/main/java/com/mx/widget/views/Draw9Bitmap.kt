@@ -12,8 +12,6 @@ import android.view.View
 open class Draw9Bitmap @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-    private val TRANS_COLOR = Color.parseColor("#00000000")
-
     private var mPaint: Paint? = null
     private var emptyPaint: Paint? = null
     private var mLTCircle: RadialGradient? = null // 左上角圆形
@@ -26,10 +24,11 @@ open class Draw9Bitmap @JvmOverloads constructor(
     private var mRLinear: LinearGradient? = null // 右边的边框
     private var mBLinear: LinearGradient? = null // 底部的边框
 
-    private val startColor = Color.parseColor("#FF4081") // 开始的颜色
-    private val endColor = Color.parseColor("#00FF4081") // 结束的颜色
-    protected var mColorWidth: Float = 40f // 绘制边框的宽度
+    private val startColor = Color.parseColor("#000000") // 开始的颜色
+    private val endColor = Color.parseColor("#00000000") // 结束的颜色
+    protected var mColorWidth: Float = 30f // 绘制边框的宽度
     protected var mCircleWidth: Float = 5f // 绘制圆角的半径
+
 
     /**
      * 圆形的半径
@@ -45,7 +44,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
 
         emptyPaint = Paint()
         emptyPaint?.style = Paint.Style.FILL
-        emptyPaint?.color = 0x00ffffff
+        emptyPaint?.color = Color.TRANSPARENT
         emptyPaint?.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
@@ -82,6 +81,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
         drawCircle(canvas)
         eraseCircle(canvas)
         drawLine(canvas)
+        drawCircleLine(canvas)
     }
 
     /**
@@ -108,6 +108,8 @@ open class Draw9Bitmap @JvmOverloads constructor(
      * 删除圆形中多余的部分
      */
     private fun eraseCircle(canvas: Canvas) {
+        val width = width
+        val height = height
         /**
          * 删除三个方向的扇形
          */
@@ -128,7 +130,12 @@ open class Draw9Bitmap @JvmOverloads constructor(
         /**
          * 圆角成型！
          */
-//        canvas.drawCircle(mLineMargin, mLineMargin, mCircleWidth, emptyPaint)
+        val paint = Paint(emptyPaint)
+        paint.isAntiAlias = true // 抗锯齿在这里很重要！！
+        canvas.drawCircle(mLineMargin, mLineMargin, mCircleWidth, paint)
+        canvas.drawCircle(width - mLineMargin, mLineMargin, mCircleWidth, paint)
+        canvas.drawCircle(mLineMargin, height - mLineMargin, mCircleWidth, paint)
+        canvas.drawCircle(width - mLineMargin, height - mLineMargin, mCircleWidth, paint)
     }
 
     /**
@@ -150,4 +157,10 @@ open class Draw9Bitmap @JvmOverloads constructor(
         mPaint?.shader = mBLinear
         canvas.drawRect(mLineMargin, height - mColorWidth, width - mLineMargin, height.toFloat(), mPaint)
     }
+
+
+    private fun drawCircleLine(canvas: Canvas) {
+
+    }
+
 }

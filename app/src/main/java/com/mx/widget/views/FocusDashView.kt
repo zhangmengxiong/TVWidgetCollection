@@ -17,6 +17,8 @@ import com.mx.widget.animator.NoFocusAnimator
 
 class FocusDashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : Draw9Bitmap(context, attrs, defStyleAttr) {
+    private var mPaddingSpace = 0
+
     init {
         initView(context)
         mColorWidth = 20f
@@ -29,6 +31,17 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
         isFocusable = false
         isClickable = false
         isFocusableInTouchMode = false
+
+        mColorWidth = resources.displayMetrics.density * 8
+    }
+
+    fun setStokeWidth(w: Float) {
+        mColorWidth = w
+        postInvalidate()
+    }
+
+    fun setStokeColor() {
+
     }
 
     /**
@@ -37,6 +50,11 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
      * @param rect
      */
     fun setPaddingRect(rect: Rect) {
+        rect.left += mPaddingSpace
+        rect.right += mPaddingSpace
+        rect.top += mPaddingSpace
+        rect.bottom += mPaddingSpace
+
         paddingRect = rect
     }
 
@@ -52,7 +70,10 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
      */
     fun setFocusView(newFocus: View) {
         if (baseAnimator == null) baseAnimator = NoFocusAnimator()
-        if (paddingRect == null) paddingRect = Rect(mColorWidth.toInt(), mColorWidth.toInt(), mColorWidth.toInt(), mColorWidth.toInt())
+        if (paddingRect == null) {
+            val size = mColorWidth.toInt() + mPaddingSpace
+            paddingRect = Rect(size, size, size, size)
+        }
 
         baseAnimator?.setOnFocusView(newFocus, this, paddingRect!!)
     }
