@@ -28,7 +28,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
     private val middleColor = Color.parseColor("#66000000") // 中间的颜色
     private val endColor = Color.parseColor("#00000000") // 结束的颜色
     protected var mColorWidth: Float = 30f // 绘制边框的宽度
-    protected var mCircleWidth: Float = 0f // 绘制圆角的半径
+    protected var mCircleWidth: Float = 10f // 绘制圆角的半径
 
 
     /**
@@ -63,7 +63,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
         val positions = FloatArray(4)
         positions[0] = 0f
         positions[1] = mCircleWidth / (mCircleWidth + mColorWidth)
-        positions[2] = 0.3f
+        positions[2] = (0.3f * mColorWidth + mCircleWidth) / mLineMargin
         positions[3] = 1f
 
         mLTCircle = RadialGradient(mLineMargin, mLineMargin, mLineMargin, colors, positions, Shader.TileMode.REPEAT)
