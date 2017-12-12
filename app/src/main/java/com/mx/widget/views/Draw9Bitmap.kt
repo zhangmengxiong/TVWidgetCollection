@@ -25,9 +25,10 @@ open class Draw9Bitmap @JvmOverloads constructor(
     private var mBLinear: LinearGradient? = null // 底部的边框
 
     private val startColor = Color.parseColor("#000000") // 开始的颜色
+    private val middleColor = Color.parseColor("#66000000") // 中间的颜色
     private val endColor = Color.parseColor("#00000000") // 结束的颜色
     protected var mColorWidth: Float = 30f // 绘制边框的宽度
-    protected var mCircleWidth: Float = 5f // 绘制圆角的半径
+    protected var mCircleWidth: Float = 0f // 绘制圆角的半径
 
 
     /**
@@ -50,15 +51,20 @@ open class Draw9Bitmap @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        initGradient(w, h)
+    }
 
-        var colors = IntArray(3)
+    private fun initGradient(w: Int, h: Int) {
+        var colors = IntArray(4)
         colors[0] = startColor
         colors[1] = startColor
-        colors[2] = endColor
-        val positions = FloatArray(3)
+        colors[2] = middleColor
+        colors[3] = endColor
+        val positions = FloatArray(4)
         positions[0] = 0f
         positions[1] = mCircleWidth / (mCircleWidth + mColorWidth)
-        positions[2] = 1f
+        positions[2] = 0.3f
+        positions[3] = 1f
 
         mLTCircle = RadialGradient(mLineMargin, mLineMargin, mLineMargin, colors, positions, Shader.TileMode.REPEAT)
         mRTCircle = RadialGradient(w - mLineMargin, mLineMargin, mLineMargin, colors, positions, Shader.TileMode.REPEAT)
@@ -66,14 +72,20 @@ open class Draw9Bitmap @JvmOverloads constructor(
         mRBCircle = RadialGradient(w - mLineMargin, h - mLineMargin, mLineMargin, colors, positions, Shader.TileMode.REPEAT)
 
 //        mLLinear = LinearGradient(0f, mColorWidth, h - mColorWidth, mColorWidth, startColor, endColor, Shader.TileMode.CLAMP)
-        colors = IntArray(2)
+        colors = IntArray(3)
         colors[0] = startColor
-        colors[1] = endColor
+        colors[1] = middleColor
+        colors[2] = endColor
 
-        mLLinear = LinearGradient(mColorWidth, mColorWidth, 0f, mColorWidth, colors, null, Shader.TileMode.REPEAT)
-        mTLinear = LinearGradient(mColorWidth, mColorWidth, mColorWidth, 0f, colors, null, Shader.TileMode.REPEAT)
-        mRLinear = LinearGradient(w - mColorWidth, mColorWidth, w.toFloat(), mColorWidth, colors, null, Shader.TileMode.REPEAT)
-        mBLinear = LinearGradient(mColorWidth, height - mColorWidth, mColorWidth, height.toFloat(), colors, null, Shader.TileMode.REPEAT)
+        val floats = FloatArray(3)
+        floats[0] = 0f
+        floats[1] = 0.3f
+        floats[2] = 1f
+
+        mLLinear = LinearGradient(mColorWidth, mColorWidth, 0f, mColorWidth, colors, floats, Shader.TileMode.REPEAT)
+        mTLinear = LinearGradient(mColorWidth, mColorWidth, mColorWidth, 0f, colors, floats, Shader.TileMode.REPEAT)
+        mRLinear = LinearGradient(w - mColorWidth, mColorWidth, w.toFloat(), mColorWidth, colors, floats, Shader.TileMode.REPEAT)
+        mBLinear = LinearGradient(mColorWidth, height - mColorWidth, mColorWidth, height.toFloat(), colors, floats, Shader.TileMode.REPEAT)
     }
 
     override fun onDraw(canvas: Canvas) {
