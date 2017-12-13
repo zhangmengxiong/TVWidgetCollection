@@ -24,9 +24,10 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     init {
         initView(context)
-        setStroke(30f)
-        setRadius(5f)
-        setColors(Color.parseColor("#000000"), Color.parseColor("#99000000"), Color.TRANSPARENT)
+        setStroke(20f)
+        setRadius(4f)
+        setColors(Color.parseColor("#0000FF"), Color.parseColor("#990000FF"), Color.TRANSPARENT)
+        setColorsWeight(0.1f)
     }
 
     private fun initView(context: Context) {
