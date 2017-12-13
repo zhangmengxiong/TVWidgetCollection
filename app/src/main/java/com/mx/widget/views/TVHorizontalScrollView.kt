@@ -7,25 +7,26 @@ import android.widget.HorizontalScrollView
 
 /**
  * 当你使用滚动窗口焦点错乱的时候，就可以使用这个控件.
- *
- *
  * 使用方法和滚动窗口是一样的，具体查看DEMO吧.
- *
- *
  * 如果想改变滚动的系数，R.dimen.fading_edge
- *
- *
- *
  * @author hailongqiu
  */
 class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0)
     : HorizontalScrollView(context, attrs, defStyle) {
-    internal val TAG = "TVHorizontalScrollView"
-
+    private var centerInView: Boolean = false
     private var mFadingEdge: Int = 0
+
+    init {
+        mFadingEdge = 0
+        centerInView = true
+    }
 
     fun setFadingEdge(fadingEdge: Int) {
         this.mFadingEdge = fadingEdge
+    }
+
+    fun setFocusCenterInViewGroup(c: Boolean) {
+        centerInView = c
     }
 
     override fun computeScrollDeltaToGetChildRectOnScreen(rect: Rect): Int {
@@ -36,7 +37,11 @@ class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: 
         var screenLeft = scrollX
         var screenRight = screenLeft + width
 
-        val fadingEdge = if (mFadingEdge > 0) mFadingEdge else 50
+        var fadingEdge = if (mFadingEdge > 0) mFadingEdge else 0
+        if (centerInView) {
+            val focusView = findFocus()
+            fadingEdge = width / 2 - (focusView?.width ?: 0) / 2
+        }
 
         // leave room for left fading edge as long as rect isn't at very left
         if (rect.left > 0) {

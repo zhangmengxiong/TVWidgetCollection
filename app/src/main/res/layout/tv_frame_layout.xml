@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.mx.widget.views.TVFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/colorPrimary"
+            android:focusable="true"
+            android:text="123123" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="200dp"
+            android:background="@color/colorPrimary"
+            android:focusable="true"
+            android:text="123123" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/colorPrimary"
+            android:focusable="true"
+            android:text="123123" />
+
+    </com.mx.widget.views.TVFrameLayout>
+
+    <com.mx.widget.views.TVHorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp">
+
+        <com.mx.widget.views.TVLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:focusable="true"
+                android:text="123123" />
+
+        </com.mx.widget.views.TVLinearLayout>
+    </com.mx.widget.views.TVHorizontalScrollView>
+
+    <com.mx.widget.views.FocusDashView
+        android:id="@+id/focusView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</FrameLayout>

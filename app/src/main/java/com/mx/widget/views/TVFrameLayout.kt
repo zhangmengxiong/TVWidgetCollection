@@ -1,6 +1,7 @@
 package com.mx.widget.views
 
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -39,5 +40,9 @@ class TVFrameLayout @JvmOverloads constructor(context: Context, attrs: Attribute
             }
         }
         return i
+    }
+
+    override fun onRequestFocusInDescendants(direction: Int, previouslyFocusedRect: Rect?): Boolean {
+        return super.onRequestFocusInDescendants(direction, previouslyFocusedRect)
     }
 }
