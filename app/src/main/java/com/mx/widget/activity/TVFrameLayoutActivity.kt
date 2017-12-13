@@ -22,5 +22,6 @@ class TVFrameLayoutActivity : Activity() {
             rootLay.findFocus()?.let { focusView.setFocusView(it) }
         }
         focusView.setBaseAnimator(MoveFocusAnimator())
+        tvHorizontalScrollView.setFocusCenterInViewGroup(true)
     }
 }

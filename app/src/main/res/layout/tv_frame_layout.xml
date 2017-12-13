@@ -40,6 +40,7 @@
     </com.mx.widget.views.TVFrameLayout>
 
     <com.mx.widget.views.TVHorizontalScrollView
+        android:id="@+id/tvHorizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp">

@@ -19,6 +19,8 @@ import com.mx.widget.animator.NoFocusAnimator
 class FocusDashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : Draw9Bitmap(context, attrs, defStyleAttr) {
     private var mPaddingSpace = 0
+    private var mScale = 1.1f
+    private var mDuration = 100L
     private var paddingRect: Rect? = null
     private var baseAnimator: IBaseAnimator? = null
 
@@ -28,6 +30,8 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
         setRadius(4f)
         setColors(Color.parseColor("#00FFFF"), Color.parseColor("#7700FFFF"), Color.TRANSPARENT)
         setColorsWeight(0.2f)
+        baseAnimator = NoFocusAnimator()
+        baseAnimator?.setAnimation(mScale, mDuration)
     }
 
     private fun initView(context: Context) {
@@ -51,12 +55,11 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
      * @param newFocus
      */
     fun setFocusView(newFocus: View) {
-        if (baseAnimator == null) baseAnimator = NoFocusAnimator()
         if (paddingRect == null) {
             val size = getStroke().toInt() + mPaddingSpace
             paddingRect = Rect(size, size, size, size)
         }
-
+        baseAnimator?.setAnimation(mScale, mDuration)
         baseAnimator?.setOnFocusView(newFocus, this, paddingRect!!)
     }
 }

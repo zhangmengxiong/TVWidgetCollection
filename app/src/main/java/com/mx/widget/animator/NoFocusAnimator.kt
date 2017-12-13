@@ -13,12 +13,16 @@ import java.lang.ref.SoftReference
  */
 
 class NoFocusAnimator : IBaseAnimator {
-    private var scaleSize: Float = 1.1f
+    private var scaleSize: Float = 1.3f
+    private var scaleDuration = 100L
     private var oldFocus: SoftReference<View>? = null
 
-    override fun setScale(scale: Float) {
+    override fun setAnimation(scale: Float, duration: Long) {
         if (scale >= 1f) {
             scaleSize = scale
+        }
+        if (duration > 0) {
+            scaleDuration = duration
         }
     }
 
@@ -60,7 +64,7 @@ class NoFocusAnimator : IBaseAnimator {
         }
 
         if (scaleSize > 1) {
-            val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, 200)
+            val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration)
             focusView.clearAnimation()
             focusView.bringToFront()
             focusView.startAnimation(anima)
@@ -69,7 +73,7 @@ class NoFocusAnimator : IBaseAnimator {
         if (oldFocus != focusView) {
             oldFocus?.let {
                 it.clearAnimation()
-                val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, 200)
+                val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration)
                 it.startAnimation(anima)
             }
             this.oldFocus = SoftReference(focusView)

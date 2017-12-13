@@ -12,5 +12,5 @@ import android.view.View
 interface IBaseAnimator {
     fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect)
 
-    fun setScale(scale: Float)
+    fun setAnimation(scale: Float, duration: Long)
 }
