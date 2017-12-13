@@ -1,6 +1,7 @@
 package com.mx.widget.views
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
@@ -18,44 +19,20 @@ import com.mx.widget.animator.NoFocusAnimator
 class FocusDashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : Draw9Bitmap(context, attrs, defStyleAttr) {
     private var mPaddingSpace = 0
+    private var paddingRect: Rect? = null
+    private var baseAnimator: IBaseAnimator? = null
 
     init {
         initView(context)
-        mColorWidth = 20f
+        setStroke(30f)
+        setRadius(5f)
+        setColors(Color.parseColor("#000000"), Color.parseColor("#99000000"), Color.TRANSPARENT)
     }
-
-    private var paddingRect: Rect? = null
-    private var baseAnimator: IBaseAnimator? = null
 
     private fun initView(context: Context) {
         isFocusable = false
         isClickable = false
         isFocusableInTouchMode = false
-
-        mColorWidth = resources.displayMetrics.density * 8
-    }
-
-    fun setStokeWidth(w: Float) {
-        mColorWidth = w
-        postInvalidate()
-    }
-
-    fun setStokeColor() {
-
-    }
-
-    /**
-     * 设置阴影的边框值
-     *
-     * @param rect
-     */
-    fun setPaddingRect(rect: Rect) {
-        rect.left += mPaddingSpace
-        rect.right += mPaddingSpace
-        rect.top += mPaddingSpace
-        rect.bottom += mPaddingSpace
-
-        paddingRect = rect
     }
 
     fun setBaseAnimator(animator: IBaseAnimator) {
@@ -71,7 +48,7 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
     fun setFocusView(newFocus: View) {
         if (baseAnimator == null) baseAnimator = NoFocusAnimator()
         if (paddingRect == null) {
-            val size = mColorWidth.toInt() + mPaddingSpace
+            val size = getStroke().toInt() + mPaddingSpace
             paddingRect = Rect(size, size, size, size)
         }
 

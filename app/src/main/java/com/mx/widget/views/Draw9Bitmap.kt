@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import kotlin.math.min
 
 
 /**
@@ -24,11 +25,11 @@ open class Draw9Bitmap @JvmOverloads constructor(
     private var mRLinear: LinearGradient? = null // 右边的边框
     private var mBLinear: LinearGradient? = null // 底部的边框
 
-    private val startColor = Color.parseColor("#000000") // 开始的颜色
-    private val middleColor = Color.parseColor("#66000000") // 中间的颜色
-    private val endColor = Color.parseColor("#00000000") // 结束的颜色
-    protected var mColorWidth: Float = 30f // 绘制边框的宽度
-    protected var mCircleWidth: Float = 10f // 绘制圆角的半径
+    private var startColor = Color.parseColor("#000000") // 开始的颜色
+    private var middleColor = Color.parseColor("#66000000") // 中间的颜色
+    private var endColor = Color.parseColor("#00000000") // 结束的颜色
+    private var mStrokeWidth: Float = 10f // 绘制边框的宽度
+    protected var mRadiusWidth: Float = 0f // 绘制圆角的半径
 
 
     /**
@@ -36,7 +37,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
      */
     private var mLineMargin: Float = 0f
         get() {
-            return mColorWidth + mCircleWidth
+            return mStrokeWidth + mRadiusWidth
         }
 
     init {
@@ -49,8 +50,34 @@ open class Draw9Bitmap @JvmOverloads constructor(
         emptyPaint?.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
+    /**
+     * 设置边框的宽度
+     */
+    fun setStroke(w: Float) {
+        mStrokeWidth = w
+    }
+
+    protected fun getStroke(): Float = mStrokeWidth
+
+    /**
+     * 设置圆角半径
+     */
+    fun setRadius(w: Float) {
+        mRadiusWidth = w
+    }
+
+    fun setColors(start: Int, middle: Int, end: Int) {
+        startColor = start
+        middleColor = middle
+        endColor = end
+    }
+
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        if (mLineMargin * 2 >= min(w, h)) {
+            mRadiusWidth = min(w, h) / 2f - mStrokeWidth - 1
+        }
         initGradient(w, h)
     }
 
@@ -62,8 +89,8 @@ open class Draw9Bitmap @JvmOverloads constructor(
         colors[3] = endColor
         val positions = FloatArray(4)
         positions[0] = 0f
-        positions[1] = mCircleWidth / (mCircleWidth + mColorWidth)
-        positions[2] = (0.3f * mColorWidth + mCircleWidth) / mLineMargin
+        positions[1] = mRadiusWidth / (mRadiusWidth + mStrokeWidth)
+        positions[2] = (0.3f * mStrokeWidth + mRadiusWidth) / mLineMargin
         positions[3] = 1f
 
         mLTCircle = RadialGradient(mLineMargin, mLineMargin, mLineMargin, colors, positions, Shader.TileMode.REPEAT)
@@ -71,7 +98,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
         mLBCircle = RadialGradient(mLineMargin, h - mLineMargin, mLineMargin, colors, positions, Shader.TileMode.REPEAT)
         mRBCircle = RadialGradient(w - mLineMargin, h - mLineMargin, mLineMargin, colors, positions, Shader.TileMode.REPEAT)
 
-//        mLLinear = LinearGradient(0f, mColorWidth, h - mColorWidth, mColorWidth, startColor, endColor, Shader.TileMode.CLAMP)
+//        mLLinear = LinearGradient(0f, mStrokeWidth, h - mStrokeWidth, mStrokeWidth, startColor, endColor, Shader.TileMode.CLAMP)
         colors = IntArray(3)
         colors[0] = startColor
         colors[1] = middleColor
@@ -82,10 +109,10 @@ open class Draw9Bitmap @JvmOverloads constructor(
         floats[1] = 0.3f
         floats[2] = 1f
 
-        mLLinear = LinearGradient(mColorWidth, mColorWidth, 0f, mColorWidth, colors, floats, Shader.TileMode.REPEAT)
-        mTLinear = LinearGradient(mColorWidth, mColorWidth, mColorWidth, 0f, colors, floats, Shader.TileMode.REPEAT)
-        mRLinear = LinearGradient(w - mColorWidth, mColorWidth, w.toFloat(), mColorWidth, colors, floats, Shader.TileMode.REPEAT)
-        mBLinear = LinearGradient(mColorWidth, height - mColorWidth, mColorWidth, height.toFloat(), colors, floats, Shader.TileMode.REPEAT)
+        mLLinear = LinearGradient(mStrokeWidth, mStrokeWidth, 0f, mStrokeWidth, colors, floats, Shader.TileMode.REPEAT)
+        mTLinear = LinearGradient(mStrokeWidth, mStrokeWidth, mStrokeWidth, 0f, colors, floats, Shader.TileMode.REPEAT)
+        mRLinear = LinearGradient(w - mStrokeWidth, mStrokeWidth, w.toFloat(), mStrokeWidth, colors, floats, Shader.TileMode.REPEAT)
+        mBLinear = LinearGradient(mStrokeWidth, height - mStrokeWidth, mStrokeWidth, height.toFloat(), colors, floats, Shader.TileMode.REPEAT)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -144,10 +171,10 @@ open class Draw9Bitmap @JvmOverloads constructor(
          */
         val paint = Paint(emptyPaint)
         paint.isAntiAlias = true // 抗锯齿在这里很重要！！
-        canvas.drawCircle(mLineMargin, mLineMargin, mCircleWidth, paint)
-        canvas.drawCircle(width - mLineMargin, mLineMargin, mCircleWidth, paint)
-        canvas.drawCircle(mLineMargin, height - mLineMargin, mCircleWidth, paint)
-        canvas.drawCircle(width - mLineMargin, height - mLineMargin, mCircleWidth, paint)
+        canvas.drawCircle(mLineMargin, mLineMargin, mRadiusWidth, paint)
+        canvas.drawCircle(width - mLineMargin, mLineMargin, mRadiusWidth, paint)
+        canvas.drawCircle(mLineMargin, height - mLineMargin, mRadiusWidth, paint)
+        canvas.drawCircle(width - mLineMargin, height - mLineMargin, mRadiusWidth, paint)
     }
 
     /**
@@ -158,16 +185,16 @@ open class Draw9Bitmap @JvmOverloads constructor(
         val height = height
 
         mPaint?.shader = mLLinear
-        canvas.drawRect(0f, mLineMargin, mColorWidth, height - mLineMargin, mPaint)
+        canvas.drawRect(0f, mLineMargin, mStrokeWidth, height - mLineMargin, mPaint)
 
         mPaint?.shader = mTLinear
-        canvas.drawRect(mLineMargin, 0f, width - mLineMargin, mColorWidth, mPaint)
+        canvas.drawRect(mLineMargin, 0f, width - mLineMargin, mStrokeWidth, mPaint)
 
         mPaint?.shader = mRLinear
-        canvas.drawRect(width - mColorWidth, mLineMargin, width.toFloat(), height - mLineMargin, mPaint)
+        canvas.drawRect(width - mStrokeWidth, mLineMargin, width.toFloat(), height - mLineMargin, mPaint)
 
         mPaint?.shader = mBLinear
-        canvas.drawRect(mLineMargin, height - mColorWidth, width - mLineMargin, height.toFloat(), mPaint)
+        canvas.drawRect(mLineMargin, height - mStrokeWidth, width - mLineMargin, height.toFloat(), mPaint)
     }
 
 
