@@ -3,6 +3,7 @@ package com.mx.widget.activity
 import android.app.Activity
 import android.os.Bundle
 import com.mx.widget.R
+import com.mx.widget.animator.MoveFocusAnimator
 import kotlinx.android.synthetic.main.tv_frame_layout.*
 
 /**
@@ -20,6 +21,6 @@ class TVFrameLayoutActivity : Activity() {
         rootLay.viewTreeObserver?.addOnScrollChangedListener {
             rootLay.findFocus()?.let { focusView.setFocusView(it) }
         }
-//        focusView.setBaseAnimator(Move)
+        focusView.setBaseAnimator(MoveFocusAnimator())
     }
 }

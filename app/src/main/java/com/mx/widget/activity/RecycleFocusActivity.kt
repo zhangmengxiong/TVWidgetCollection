@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import android.view.View
 import com.mx.widget.R
 import com.mx.widget.adapts.MyRecycleAdapt
+import com.mx.widget.animator.MoveFocusAnimator
 import com.mx.widget.views.TVRecyclerView
 import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.recycle_focus_activity.*
@@ -35,7 +36,7 @@ class RecycleFocusActivity : Activity() {
 //        }
         recycleView.setLayoutManager(gridlayoutManager)
         recycleView.setFocusable(false)
-//        recycleView.setSelectedItemAtCentered(true) // 设置item在中间移动.
+        recycleView.setSelectedItemAtCentered(true) // 设置item在中间移动.
         recycleView.setAdapter(adapter)
         recycleView.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
@@ -131,5 +132,7 @@ class RecycleFocusActivity : Activity() {
                 else -> false
             }
         }
+
+        focusView.setBaseAnimator(MoveFocusAnimator())
     }
 }

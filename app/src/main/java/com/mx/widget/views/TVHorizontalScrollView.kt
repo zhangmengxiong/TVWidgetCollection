@@ -17,8 +17,8 @@ class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: 
     private var mFadingEdge: Int = 0
 
     init {
-        mFadingEdge = 0
-        centerInView = true
+        mFadingEdge = 10
+        centerInView = false
         clipChildren = false
         clipToPadding = false
     }

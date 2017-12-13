@@ -3,6 +3,7 @@ package com.mx.widget.animator
 import android.graphics.Rect
 import android.view.View
 import android.widget.FrameLayout
+import java.lang.ref.SoftReference
 
 /**
  * 没有动画效果的焦点浮层
@@ -13,7 +14,7 @@ import android.widget.FrameLayout
 
 class NoFocusAnimator : IBaseAnimator {
     private var scaleSize: Float = 1.1f
-    private var oldFocus: View? = null
+    private var oldFocus: SoftReference<View>? = null
 
     override fun setScale(scale: Float) {
         if (scale >= 1f) {
@@ -24,6 +25,7 @@ class NoFocusAnimator : IBaseAnimator {
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {
         if (focusView == null) {
             floatView.visibility = View.GONE
+            oldFocus = null
             return
         }
         val layoutParams = floatView.layoutParams as FrameLayout.LayoutParams
@@ -58,13 +60,21 @@ class NoFocusAnimator : IBaseAnimator {
         }
 
         if (scaleSize > 1) {
-            val anima = AnimationBiz.createScaleAnimation(scaleSize, 200)
+            val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, 200)
+            focusView.clearAnimation()
             focusView.bringToFront()
             focusView.startAnimation(anima)
         }
-        oldFocus?.clearAnimation()
+        val oldFocus = oldFocus?.get()
+        if (oldFocus != focusView) {
+            oldFocus?.let {
+                it.clearAnimation()
+                val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, 200)
+                it.startAnimation(anima)
+            }
+            this.oldFocus = SoftReference(focusView)
+        }
 
-        oldFocus = focusView
         layoutParams.leftMargin = left
         layoutParams.topMargin = top
         layoutParams.width = newWidth
