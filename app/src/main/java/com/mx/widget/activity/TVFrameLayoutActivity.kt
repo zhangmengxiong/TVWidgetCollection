@@ -20,5 +20,6 @@ class TVFrameLayoutActivity : Activity() {
         rootLay.viewTreeObserver?.addOnScrollChangedListener {
             rootLay.findFocus()?.let { focusView.setFocusView(it) }
         }
+//        focusView.setBaseAnimator(Move)
     }
 }

@@ -21,6 +21,8 @@ class TVListView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     init {
         this.isChildrenDrawingOrderEnabled = true
+        clipChildren = false
+        clipToPadding = false
     }
 
     override fun isInTouchMode(): Boolean {

@@ -22,6 +22,8 @@ class TVRecyclerView @JvmOverloads constructor(
     init {
         isChildrenDrawingOrderEnabled = true
         frontChildIndex = -1
+        clipChildren = false
+        clipToPadding = false
     }
 
     /**

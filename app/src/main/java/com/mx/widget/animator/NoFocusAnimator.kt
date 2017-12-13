@@ -12,6 +12,14 @@ import android.widget.FrameLayout
  */
 
 class NoFocusAnimator : IBaseAnimator {
+    private var scaleSize: Float = 1.1f
+    private var oldFocus: View? = null
+
+    override fun setScale(scale: Float) {
+        if (scale >= 1f) {
+            scaleSize = scale
+        }
+    }
 
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {
         if (focusView == null) {
@@ -23,15 +31,40 @@ class NoFocusAnimator : IBaseAnimator {
         val p = IntArray(2)
         focusView.getLocationOnScreen(p)
 
-        val newWidth = focusView.width + paddingRect.left + paddingRect.right
-        val newHeight = focusView.height + paddingRect.top + paddingRect.bottom
+        val newWidth = focusView.width + paddingRect.left + paddingRect.right + if (scaleSize > 1) {
+            (focusView.width * (scaleSize - 1)).toInt()
+        } else {
+            0
+        }
+        val newHeight = focusView.height + paddingRect.top + paddingRect.bottom + if (scaleSize > 1) {
+            (focusView.height * (scaleSize - 1)).toInt()
+        } else {
+            0
+        }
 
-        val left = p[0] - paddingRect.left
-        val top = p[1] - paddingRect.top
+        val left = p[0] - paddingRect.left - if (scaleSize > 1) {
+            (focusView.width * (scaleSize - 1) / 2f).toInt()
+        } else {
+            0
+        }
+        val top = p[1] - paddingRect.top - if (scaleSize > 1) {
+            (focusView.height * (scaleSize - 1) / 2f).toInt()
+        } else {
+            0
+        }
 
         if (left == layoutParams.leftMargin && top == layoutParams.topMargin && floatView.visibility == View.VISIBLE) {
             return
         }
+
+        if (scaleSize > 1) {
+            val anima = AnimationBiz.createScaleAnimation(scaleSize, 200)
+            focusView.bringToFront()
+            focusView.startAnimation(anima)
+        }
+        oldFocus?.clearAnimation()
+
+        oldFocus = focusView
         layoutParams.leftMargin = left
         layoutParams.topMargin = top
         layoutParams.width = newWidth

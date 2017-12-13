@@ -15,6 +15,11 @@ import android.widget.FrameLayout
  */
 
 class MoveFocusAnimator : IBaseAnimator {
+
+    override fun setScale(scale: Float) {
+
+    }
+
     private var mAnimatorSet: AnimatorSet? = null
 
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {

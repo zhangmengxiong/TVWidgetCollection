@@ -2,10 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootLay"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
 
     <com.mx.widget.views.TVFrameLayout
+        android:id="@+id/tvFrameLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp">

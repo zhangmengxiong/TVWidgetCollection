@@ -19,6 +19,8 @@ class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: 
     init {
         mFadingEdge = 0
         centerInView = true
+        clipChildren = false
+        clipToPadding = false
     }
 
     fun setFadingEdge(fadingEdge: Int) {
@@ -27,6 +29,10 @@ class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: 
 
     fun setFocusCenterInViewGroup(c: Boolean) {
         centerInView = c
+    }
+
+    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+        super.onScrollChanged(l, t, oldl, oldt)
     }
 
     override fun computeScrollDeltaToGetChildRectOnScreen(rect: Rect): Int {

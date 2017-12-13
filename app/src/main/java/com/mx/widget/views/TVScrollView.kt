@@ -26,6 +26,8 @@ class TVScrollView @JvmOverloads constructor(context: Context, attrs: AttributeS
     init {
         mFadingEdge = 0
         centerInView = true
+        clipChildren = false
+        clipToPadding = false
     }
 
     fun setFadingEdge(fadingEdge: Int) {
