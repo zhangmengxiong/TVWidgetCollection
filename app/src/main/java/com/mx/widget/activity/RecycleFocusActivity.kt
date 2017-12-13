@@ -1,6 +1,7 @@
 package com.mx.widget.activity
 
 import android.app.Activity
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -8,8 +9,7 @@ import android.view.KeyEvent
 import android.view.View
 import com.mx.widget.R
 import com.mx.widget.adapts.MyRecycleAdapt
-import com.mx.widget.animator.MoveFocusAnimator
-import com.mx.widget.views.RecycleCall
+import com.mx.widget.views.TVRecyclerView
 import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.recycle_focus_activity.*
 
@@ -28,7 +28,7 @@ class RecycleFocusActivity : Activity() {
 
         val adapter = MyRecycleAdapt(list)
         val gridlayoutManager = LinearLayoutManager(this) // 解决快速长按焦点丢失问题.
-        gridlayoutManager.orientation = LinearLayoutManager.VERTICAL
+        gridlayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 //        recycleView.setOnItemListener(this)
 //        recycleView.setOnItemClickListener { parent, itemView, position ->
 //
@@ -37,8 +37,20 @@ class RecycleFocusActivity : Activity() {
         recycleView.setFocusable(false)
 //        recycleView.setSelectedItemAtCentered(true) // 设置item在中间移动.
         recycleView.setAdapter(adapter)
+        recycleView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
+                val space = 5
+                outRect?.left = space
+                outRect?.right = space
+                outRect?.bottom = space
 
-        recycleView.setRecycleCall(object : RecycleCall() {
+                // Add top margin only for the first item to avoid double space between items
+                if (parent?.getChildPosition(view) == 0)
+                    outRect?.top = space
+            }
+        })
+
+        recycleView.setRecycleCall(object : TVRecyclerView.RecycleCall() {
             override fun onItemSelect(position: Int, view: View) {
                 println("$position is Select")
             }
@@ -46,38 +58,39 @@ class RecycleFocusActivity : Activity() {
             override fun onItemClick(position: Int, view: View) {
                 println("$position is Click")
             }
-
-            override fun onKeyDown(): Boolean {
-                println("向下焦点")
-                return true
-            }
         })
-        recycleView.postDelayed({
-            recycleView.setDefaultSelect(95)
-        }, 2000)
-
-//        recycleView.setSelectedItemOffset(111, 111)
-        recycleView.setSelectedItemAtCentered(true)
+//        recycleView.postDelayed({
+//            recycleView.setDefaultSelect(95)
+//        }, 2000)
 
         with(rootLay.viewTreeObserver) {
             addOnGlobalFocusChangeListener { oldFocus, newFocus ->
+                println("addOnGlobalFocusChangeListener")
                 if (newFocus is RecyclerView) {
 
                 } else {
-                    focusView.setFocusView(newFocus)
+                    newFocus?.let { focusView.setFocusView(it) }
                 }
             }
             addOnScrollChangedListener {
                 rootLay.findFocus()?.let { focusView.setFocusView(it) }
             }
         }
+//        recycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    //滚动结束
+//                    rootLay.findFocus()?.let { focusView.setFocusView(it) }
+//                }
+//            }
+//        })
 
-        focusView.setBaseAnimator(MoveFocusAnimator())
+//        focusView.setBaseAnimator(MoveFocusAnimator())
 
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    recycleView.setDefaultSelect(recycleView.findFirstVisibleItemPosition())
+                    recycleView.setDefaultSelect(96)
                     true
                 }
                 else -> false

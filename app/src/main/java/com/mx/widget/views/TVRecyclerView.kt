@@ -1,12 +1,11 @@
 package com.mx.widget.views
 
 import android.content.Context
+import android.graphics.Canvas
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-import android.view.FocusFinder
-import android.view.KeyEvent
 import android.view.View
 
 
@@ -24,6 +23,9 @@ class TVRecyclerView @JvmOverloads constructor(
         frontChildIndex = -1
     }
 
+    /**
+     * 重写
+     */
     override fun bringChildToFront(child: View) {
         frontChildIndex = indexOfChild(child)
         if (frontChildIndex >= 0) {
@@ -46,25 +48,17 @@ class TVRecyclerView @JvmOverloads constructor(
     override fun requestChildFocus(child: View?, focused: View?) {
         if (focusCenterInView) {
             child?.let {
-                println("top = ${child.top}")
-                println("height = ${child.height}")
-                println("scrollY = $scrollY")
-                println("height = $height")
-
                 it.bringToFront()
-                if (isVertical()) {
-                    val dy = (child.top + child.height / 2) - (scrollY + height / 2 - paddingBottom - paddingTop)
-                    smoothScrollBy(0, dy)
-                } else {
-                    val dx = (child.left + child.width / 2) - (scrollX + width / 2 - paddingLeft - paddingRight)
-                    smoothScrollBy(dx, 0)
-                }
+                scrollToCenter(it)
             }
         }
         super.requestChildFocus(child, focused)
     }
 
     private var focusCenterInView = false
+    /**
+     * 设置焦点永远在ViewGroup中间
+     */
     fun setSelectedItemAtCentered(center: Boolean) {
         focusCenterInView = center
     }
@@ -82,56 +76,11 @@ class TVRecyclerView @JvmOverloads constructor(
         super.onChildAttachedToWindow(child)
     }
 
-    /**
-     * RecycleView内焦点转出时回调处理！
-     */
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        event?.let {
-            val keyCode = event.keyCode
-            if (event.action == KeyEvent.ACTION_DOWN) {
-                when (keyCode) {
-                    KeyEvent.KEYCODE_DPAD_LEFT -> {
-                        println("KEYCODE_DPAD_LEFT")
-                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_LEFT) == null
-                                && recycleCall?.onKeyLeft() == true) {
-                            return true
-                        }
-                    }
-                    KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                        println("KEYCODE_DPAD_RIGHT")
-                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_RIGHT) == null
-                                && recycleCall?.onKeyRight() == true) {
-                            return true
-                        }
-                    }
-                    KeyEvent.KEYCODE_DPAD_UP -> {
-                        println("KEYCODE_DPAD_UP")
-                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_UP) == null
-                                && recycleCall?.onKeyUp() == true) {
-                            return true
-                        }
-                    }
-                    KeyEvent.KEYCODE_DPAD_DOWN -> {
-                        println("KEYCODE_DPAD_DOWN")
-                        if (FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_DOWN) == null
-                                && recycleCall?.onKeyDown() == true) {
-                            return true
-                        }
-                    }
-                    else -> {
-
-                    }
-                }
-//                nextFocus?.let {
-//                    println("下一个焦点找到！")
-//                }
-            }
-        }
-        return super.dispatchKeyEvent(event)
-    }
-
     private var recycleCall: RecycleCall? = null
 
+    /**
+     * item点击、选中回调
+     */
     fun setRecycleCall(call: RecycleCall) {
         this.recycleCall = call
     }
@@ -168,6 +117,9 @@ class TVRecyclerView @JvmOverloads constructor(
         return RecyclerView.NO_POSITION
     }
 
+    /**
+     * 找到第一个显示的position
+     */
     fun findFirstVisibleItemPosition(): Int {
         val lm = layoutManager
         if (lm != null) {
@@ -181,6 +133,9 @@ class TVRecyclerView @JvmOverloads constructor(
         return RecyclerView.NO_POSITION
     }
 
+    /**
+     * 设置选中位置，自动获取焦点
+     */
     fun setDefaultSelect(int: Int) {
         val first = findFirstVisibleItemPosition()
         val last = findLastCompletelyVisibleItemPosition()
@@ -190,16 +145,54 @@ class TVRecyclerView @JvmOverloads constructor(
         val vh = findViewHolderForAdapterPosition(int)
         if (vh?.itemView != null) {
             requestFocusFromTouch()
-            vh.itemView?.requestFocus()
+            vh.itemView?.let {
+                it.requestFocus()
+                it.requestFocusFromTouch()
+                scrollToCenter(it)
+            }
         } else {
             post {
                 val vh1 = findViewHolderForAdapterPosition(int)
                 requestFocusFromTouch()
-                vh1?.itemView?.requestFocus()
+                vh1.itemView?.let {
+                    it.requestFocus()
+                    it.requestFocusFromTouch()
+                    scrollToCenter(it)
+                }
             }
         }
     }
 
+    /**
+     * 滑动过快时可能会报错
+     */
+    override fun draw(c: Canvas?) {
+        try {
+            super.draw(c)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 将child滚动到中间位置
+     */
+    private fun scrollToCenter(child: View) {
+        stopScroll()
+        if (isVertical()) {
+            val dy = (child.top + child.height / 2) - (scrollY + height / 2)
+            println("dy = $dy")
+            smoothScrollBy(0, dy)
+        } else {
+            val dx = (child.left + child.width / 2) - (scrollX + width / 2)
+            println("dx = $dx")
+            smoothScrollBy(dx, 0)
+        }
+    }
+
+    /**
+     * 是否为竖向布局
+     */
     fun isVertical(): Boolean {
         val lm = layoutManager
         if (lm != null) {
@@ -214,23 +207,13 @@ class TVRecyclerView @JvmOverloads constructor(
         }
         return false
     }
-}
 
-open class RecycleCall {
-    /**
-     * 当前ViewGroup内焦点往左跳转，焦点处理！
-     * 返回true时不再分发事件
-     */
-    open fun onKeyLeft(): Boolean = false
+    open class RecycleCall {
+        /**
+         * 点击响应
+         */
+        open fun onItemClick(position: Int, view: View) = Unit
 
-    open fun onKeyRight(): Boolean = false
-    open fun onKeyUp(): Boolean = false
-    open fun onKeyDown(): Boolean = false
-
-    /**
-     * 点击响应
-     */
-    open fun onItemClick(position: Int, view: View) = Unit
-
-    open fun onItemSelect(position: Int, view: View) = Unit
+        open fun onItemSelect(position: Int, view: View) = Unit
+    }
 }
