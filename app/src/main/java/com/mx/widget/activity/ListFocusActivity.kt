@@ -28,7 +28,8 @@ class ListFocusActivity : Activity() {
                         newFocus.removeOnLayoutChangeListener(this)
                         newFocus.selectedView?.let {
                             it.bringToFront()
-                            focusView.setFocusView(it) }
+                            focusView.setFocusView(it)
+                        }
                     }
                 })
             } else {
@@ -42,11 +43,7 @@ class ListFocusActivity : Activity() {
                     override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int,
                                                 bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                         newFocus.removeOnLayoutChangeListener(this)
-                        try {
-                            focusView.setFocusView(newFocus.selectedView)
-                        } catch (ex: Exception) {
-                            ex.printStackTrace()
-                        }
+                        newFocus.selectedView?.let { focusView.setFocusView(it) }
                     }
                 })
             } else {
@@ -74,8 +71,7 @@ class ListFocusActivity : Activity() {
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    listView.setSelection(98)
-                    listView.invalidate()
+                    listView.setDefualtSelect(98)
                     listView.post { listView.requestFocus() }
                     true
                 }

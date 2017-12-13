@@ -87,7 +87,13 @@ class RecycleFocusActivity : Activity() {
 
 //        focusView.setBaseAnimator(MoveFocusAnimator())
 
-        btn.setOnKey {
+        verticalBtn.setOnClickListener {
+            val gridlayoutManager = LinearLayoutManager(this)
+            gridlayoutManager.orientation = LinearLayoutManager.VERTICAL
+            recycleView.setLayoutManager(gridlayoutManager)
+            recycleView.adapter = adapter
+        }
+        verticalBtn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
                     recycleView.setDefaultSelect(96)
@@ -95,7 +101,35 @@ class RecycleFocusActivity : Activity() {
                 }
                 else -> false
             }
+        }
+        recycleView.setOnKey {
+            when (it) {
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    horizontalBtn.requestFocus()
+                    true
+                }
+                KeyEvent.KEYCODE_DPAD_LEFT -> {
+                    verticalBtn.requestFocus()
+                    true
+                }
+                else -> false
+            }
+        }
 
+        horizontalBtn.setOnClickListener {
+            val gridlayoutManager = LinearLayoutManager(this)
+            gridlayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            recycleView.setLayoutManager(gridlayoutManager)
+            recycleView.adapter = adapter
+        }
+        horizontalBtn.setOnKey {
+            when (it) {
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    recycleView.setDefaultSelect(1)
+                    true
+                }
+                else -> false
+            }
         }
     }
 }

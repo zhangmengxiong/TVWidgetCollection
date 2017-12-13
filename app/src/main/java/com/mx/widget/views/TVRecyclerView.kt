@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
+import android.view.KeyEvent
 import android.view.View
 
 
@@ -152,6 +153,8 @@ class TVRecyclerView @JvmOverloads constructor(
             }
         } else {
             post {
+                if (!isShown) return@post
+
                 val vh1 = findViewHolderForAdapterPosition(int)
                 requestFocusFromTouch()
                 vh1.itemView?.let {
@@ -161,6 +164,22 @@ class TVRecyclerView @JvmOverloads constructor(
                 }
             }
         }
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        val event = event ?: return super.dispatchKeyEvent(event)
+        onKeyCall?.let {
+            if (event.action == KeyEvent.ACTION_DOWN
+                    && event.keyCode in arrayOf(KeyEvent.KEYCODE_DPAD_RIGHT,
+                    KeyEvent.KEYCODE_DPAD_DOWN,
+                    KeyEvent.KEYCODE_DPAD_LEFT,
+                    KeyEvent.KEYCODE_DPAD_UP)) {
+                if (it(event.keyCode)) {
+                    return true
+                }
+            }
+        }
+        return super.dispatchKeyEvent(event)
     }
 
     /**
@@ -193,7 +212,7 @@ class TVRecyclerView @JvmOverloads constructor(
     /**
      * 是否为竖向布局
      */
-    fun isVertical(): Boolean {
+    private fun isVertical(): Boolean {
         val lm = layoutManager
         if (lm != null) {
             if (lm is LinearLayoutManager) {
@@ -206,6 +225,11 @@ class TVRecyclerView @JvmOverloads constructor(
             return lm.canScrollVertically()
         }
         return false
+    }
+
+    private var onKeyCall: ((keyCode: Int) -> Boolean)? = null
+    fun setOnKey(action: (keyCode: Int) -> Boolean) {
+        onKeyCall = action
     }
 
     open class RecycleCall {
