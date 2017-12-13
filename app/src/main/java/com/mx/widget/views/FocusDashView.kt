@@ -26,8 +26,8 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
         initView(context)
         setStroke(20f)
         setRadius(4f)
-        setColors(Color.parseColor("#0000FF"), Color.parseColor("#990000FF"), Color.TRANSPARENT)
-        setColorsWeight(0.1f)
+//        setColors(Color.parseColor("#00FFFF"), Color.parseColor("#7700FFFF"), Color.TRANSPARENT)
+        setColorsWeight(0.2f)
     }
 
     private fun initView(context: Context) {
@@ -38,6 +38,10 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     fun setBaseAnimator(animator: IBaseAnimator) {
         baseAnimator = animator
+    }
+
+    fun setPadding(i: Int) {
+        mPaddingSpace = i
     }
 
     /**

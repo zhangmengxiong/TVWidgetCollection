@@ -8,6 +8,7 @@ import kotlin.math.min
 
 
 /**
+ * 浮动焦点动态绘制背景阴影
  * Created by ZMX on 2017/12/12.
  */
 open class Draw9Bitmap @JvmOverloads constructor(
