@@ -10,26 +10,13 @@ import com.mx.widget.R
 import com.mx.widget.adapts.MyRecycleAdapt
 import com.mx.widget.animator.MoveFocusAnimator
 import com.mx.widget.views.RecycleCall
-import com.mx.widget.views.RecyclerViewTV
 import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.recycle_focus_activity.*
 
 /**
  * Created by ZMX on 2017/12/11.
  */
-class RecycleFocusActivity : Activity(), RecyclerViewTV.OnItemListener {
-    override fun onItemPreSelected(parent: RecyclerViewTV?, itemView: View?, position: Int) {
-        itemView?.let { focusView.setFocusView(it) }
-    }
-
-    override fun onItemSelected(parent: RecyclerViewTV?, itemView: View?, position: Int) {
-        itemView?.let { focusView.setFocusView(it) }
-    }
-
-    override fun onReviseFocusFollow(parent: RecyclerViewTV?, itemView: View?, position: Int) {
-
-    }
-
+class RecycleFocusActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recycle_focus_activity)
