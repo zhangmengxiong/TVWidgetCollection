@@ -13,4 +13,6 @@ interface IBaseAnimator {
     fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect)
 
     fun setAnimation(scale: Float, duration: Long)
+
+    fun setMoveDuration(duration: Long)
 }

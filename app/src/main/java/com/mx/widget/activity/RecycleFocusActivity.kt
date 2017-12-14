@@ -7,10 +7,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import com.mx.widget.R
 import com.mx.widget.adapts.MyRecycleAdapt
 import com.mx.widget.animator.MoveFocusAnimator
 import com.mx.widget.views.TVRecyclerView
+import com.mx.widget.views.TVTextView
 import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.recycle_focus_activity.*
 
@@ -54,6 +57,17 @@ class RecycleFocusActivity : Activity() {
         recycleView.setRecycleCall(object : TVRecyclerView.RecycleCall() {
             override fun onItemSelect(position: Int, view: View) {
                 println("$position is Select")
+                val view = (view as ViewGroup)
+                (0..view.childCount).map { view.getChildAt(it) }.filter { it is TextView }.forEach {
+                    (it as TVTextView).startMarquee()
+                }
+            }
+
+            override fun onItemUnSelect(position: Int, view: View) {
+                val view = (view as ViewGroup)
+                (0..view.childCount).map { view.getChildAt(it) }.filter { it is TextView }.forEach {
+                    (it as TVTextView).stopMarquee()
+                }
             }
 
             override fun onItemClick(position: Int, view: View) {

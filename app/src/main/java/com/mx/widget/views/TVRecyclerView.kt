@@ -73,6 +73,8 @@ class TVRecyclerView @JvmOverloads constructor(
         child?.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
                 recycleCall?.onItemSelect(getChildAdapterPosition(v), v)
+            } else {
+                recycleCall?.onItemUnSelect(getChildAdapterPosition(v), v)
             }
         }
 
@@ -241,5 +243,7 @@ class TVRecyclerView @JvmOverloads constructor(
         open fun onItemClick(position: Int, view: View) = Unit
 
         open fun onItemSelect(position: Int, view: View) = Unit
+
+        open fun onItemUnSelect(position: Int, view: View) = Unit
     }
 }

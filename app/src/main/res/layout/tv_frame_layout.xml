@@ -28,15 +28,25 @@
             android:focusable="true"
             android:text="123123" />
 
-        <TextView
+        <RelativeLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
-            android:background="@color/colorPrimary"
-            android:focusable="true"
-            android:text="123123" />
+            android:background="@color/colorAccent"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="true">
 
+            <com.mx.widget.views.TVTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="1231231231231231231231231231   3123123" />
+        </RelativeLayout>
     </com.mx.widget.views.TVFrameLayout>
 
     <com.mx.widget.views.TVHorizontalScrollView

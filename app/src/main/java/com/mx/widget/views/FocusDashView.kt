@@ -19,7 +19,7 @@ import com.mx.widget.animator.NoFocusAnimator
 class FocusDashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : Draw9Bitmap(context, attrs, defStyleAttr) {
     private var mPaddingSpace = 0
-    private var mScale = 1.1f
+    private var mScale = 1.0f
     private var mDuration = 100L
     private var paddingRect: Rect? = null
     private var baseAnimator: IBaseAnimator? = null
@@ -48,6 +48,12 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
         mPaddingSpace = i
     }
 
+    fun setScale(scale: Float, duration: Long) {
+        mScale = scale
+        mDuration = duration
+        baseAnimator?.setAnimation(mScale, mDuration)
+    }
+
     /**
      * 设置获取焦点的View
      * 当前焦点效果层会漂浮到该View上面
@@ -60,6 +66,7 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
             paddingRect = Rect(size, size, size, size)
         }
         baseAnimator?.setAnimation(mScale, mDuration)
+        baseAnimator?.setMoveDuration(mDuration)
         baseAnimator?.setOnFocusView(newFocus, this, paddingRect!!)
     }
 }

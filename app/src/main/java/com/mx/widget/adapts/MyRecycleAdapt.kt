@@ -16,6 +16,6 @@ class MyRecycleAdapt(list: ArrayList<String>) : BaseRecycleAdapt<String>(list) {
     }
 
     override fun bindView(position: Int, holder: LayoutContainer, record: String) {
-        holder.textView.text = record + "alsdkjalsdkjaldksjlajsdlajsdlkj"
+        holder.textView.text = record + "  alsdkjalsdkjaldksjlajsdlajsdlkj"
     }
 }

@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import android.widget.FrameLayout
 import java.lang.ref.SoftReference
+import kotlin.math.max
 
 /**
  * 没有动画效果的焦点浮层
@@ -13,17 +14,17 @@ import java.lang.ref.SoftReference
  */
 
 class NoFocusAnimator : IBaseAnimator {
+    override fun setMoveDuration(duration: Long) {
+
+    }
+
     private var scaleSize: Float = 1.3f
     private var scaleDuration = 100L
     private var oldFocus: SoftReference<View>? = null
 
     override fun setAnimation(scale: Float, duration: Long) {
-        if (scale >= 1f) {
-            scaleSize = scale
-        }
-        if (duration > 0) {
-            scaleDuration = duration
-        }
+        scaleSize = max(1f, scale)
+        scaleDuration = max(100L, duration)
     }
 
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {
@@ -62,21 +63,21 @@ class NoFocusAnimator : IBaseAnimator {
         if (left == layoutParams.leftMargin && top == layoutParams.topMargin && floatView.visibility == View.VISIBLE) {
             return
         }
-
-        if (scaleSize > 1) {
+        focusView.bringToFront()
+        if (scaleSize > 1f) {
             val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration)
             focusView.clearAnimation()
-            focusView.bringToFront()
             focusView.startAnimation(anima)
-        }
-        val oldFocus = oldFocus?.get()
-        if (oldFocus != focusView) {
-            oldFocus?.let {
-                it.clearAnimation()
-                val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration)
-                it.startAnimation(anima)
+
+            val oldFocus = oldFocus?.get()
+            if (oldFocus != focusView) {
+                oldFocus?.let {
+                    it.clearAnimation()
+                    val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration)
+                    it.startAnimation(anima)
+                }
+                this.oldFocus = SoftReference(focusView)
             }
-            this.oldFocus = SoftReference(focusView)
         }
 
         layoutParams.leftMargin = left

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
+    android:layout_width="200dp"
     android:layout_height="100dp"
     android:background="@color/colorAccent"
+    android:descendantFocusability="blocksDescendants"
     android:focusable="true">
 
-    <TextView
+    <com.mx.widget.views.TVTextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:duplicateParentState="true"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:marqueeRepeatLimit="marquee_forever"
         android:padding="10dp"
         android:singleLine="true"
         android:textColor="#000000"
-        android:textSize="25sp" />
+        android:textSize="20sp" />
 </RelativeLayout>

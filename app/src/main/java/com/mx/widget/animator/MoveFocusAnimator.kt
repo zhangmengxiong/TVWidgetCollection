@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import java.lang.ref.SoftReference
+import kotlin.math.max
 
 /**
  * 带动画效果的浮层
@@ -17,16 +18,17 @@ import java.lang.ref.SoftReference
 
 class MoveFocusAnimator : IBaseAnimator {
     private var scaleSize: Float = 1.3f
-    private var duration = 100L
+    private var scaleDuration = 150L
+    private var moveDuration = 150L
     private var oldFocus: SoftReference<View>? = null
 
     override fun setAnimation(scale: Float, duration: Long) {
-        if (scale >= 1f) {
-            scaleSize = scale
-        }
-        if (duration > 0) {
-            this.duration = duration
-        }
+        scaleSize = max(1f, scale)
+        scaleDuration = max(100L, duration)
+    }
+
+    override fun setMoveDuration(duration: Long) {
+        moveDuration = duration
     }
 
     private var mAnimatorSet: AnimatorSet? = null
@@ -91,26 +93,27 @@ class MoveFocusAnimator : IBaseAnimator {
             scaleYAnimator = ObjectAnimator.ofInt(ScaleView(floatView), "height", oldHeight, newHeight)
         }
 
-        if (scaleSize > 1) {
-            val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, duration)
+        focusView.bringToFront()
+        if (scaleSize > 1f) {
+            val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration)
             focusView.clearAnimation()
-            focusView.bringToFront()
             focusView.startAnimation(anima)
-        }
-        val oldFocus = oldFocus?.get()
-        if (oldFocus != focusView) {
-            oldFocus?.let {
-                it.clearAnimation()
-                val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, duration)
-                it.startAnimation(anima)
+
+            val oldFocus = oldFocus?.get()
+            if (oldFocus != focusView) {
+                oldFocus?.let {
+                    it.clearAnimation()
+                    val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration)
+                    it.startAnimation(anima)
+                }
+                this.oldFocus = SoftReference(focusView)
             }
-            this.oldFocus = SoftReference(focusView)
         }
 
         mAnimatorSet = AnimatorSet()
         mAnimatorSet?.playTogether(transAnimatorX, transAnimatorY, scaleXAnimator, scaleYAnimator)
         mAnimatorSet?.interpolator = DecelerateInterpolator(1f)
-        mAnimatorSet?.duration = 150
+        mAnimatorSet?.duration = moveDuration
         mAnimatorSet?.start()
     }
 
