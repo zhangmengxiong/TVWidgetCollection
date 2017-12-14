@@ -24,7 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/btn"
-            android:choiceMode="singleChoice" />
+            android:choiceMode="singleChoice"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="2dp" />
     </RelativeLayout>
 
     <com.mx.widget.views.FocusDashView

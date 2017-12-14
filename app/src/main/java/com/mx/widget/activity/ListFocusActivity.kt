@@ -8,6 +8,7 @@ import android.widget.AbsListView
 import android.widget.AdapterView
 import com.mx.widget.R
 import com.mx.widget.adapts.MyListAdapt
+import com.mx.widget.animator.MoveFocusAnimator
 import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.list_focus_activity.*
 
@@ -74,8 +75,8 @@ class ListFocusActivity : Activity() {
                 view?.let { focusView.setFocusView(it) }
             }
         }
-//        focusView.setBaseAnimator(MoveFocusAnimator())
-
+        focusView.setBaseAnimator(MoveFocusAnimator())
+        focusView.setScale(1.1f, 50)
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
