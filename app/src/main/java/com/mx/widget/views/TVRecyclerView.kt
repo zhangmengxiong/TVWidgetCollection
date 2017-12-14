@@ -59,7 +59,6 @@ class TVRecyclerView @JvmOverloads constructor(
     override fun requestChildFocus(child: View?, focused: View?) {
         if (focusCenterInView) {
             child?.let {
-                it.bringToFront()
                 scrollToCenter(it)
             }
         }

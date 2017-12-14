@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.list_focus_activity.*
  *
  * 需要注意的点：
  * 1：ListView的SelectedView可能为空
+ * 2：bringToFront() 方法会带来焦点乱跳的问题
  *
  * Created by ZMX on 2017/12/11.
  */
@@ -35,7 +36,6 @@ class ListFocusActivity : Activity() {
                                                 bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                         newFocus.removeOnLayoutChangeListener(this)
                         newFocus.selectedView?.let {
-                            it.bringToFront()
                             focusView.setFocusView(it)
                         }
                     }

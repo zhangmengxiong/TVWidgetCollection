@@ -94,7 +94,6 @@ class MoveFocusAnimator : IBaseAnimator {
             scaleYAnimator = ObjectAnimator.ofInt(ScaleView(floatView), "height", oldHeight, newHeight)
         }
 
-        focusView.bringToFront()
         if (scaleSize > 1f) {
             focusView.clearAnimation()
             focusView.startAnimation(AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration))
