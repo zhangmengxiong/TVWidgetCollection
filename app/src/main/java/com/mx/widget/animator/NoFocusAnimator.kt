@@ -14,9 +14,7 @@ import kotlin.math.max
  */
 
 class NoFocusAnimator : IBaseAnimator {
-    override fun setMoveDuration(duration: Long) {
-
-    }
+    override fun setMoveDuration(duration: Long) = Unit
 
     private var scaleSize: Float = 1.3f
     private var scaleDuration = 100L
@@ -28,6 +26,8 @@ class NoFocusAnimator : IBaseAnimator {
     }
 
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {
+        oldFocus?.get()?.clearAnimation()
+
         if (focusView == null) {
             floatView.visibility = View.GONE
             oldFocus = null
@@ -65,17 +65,12 @@ class NoFocusAnimator : IBaseAnimator {
         }
         focusView.bringToFront()
         if (scaleSize > 1f) {
-            val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration)
             focusView.clearAnimation()
-            focusView.startAnimation(anima)
+            focusView.startAnimation(AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration))
 
             val oldFocus = oldFocus?.get()
             if (oldFocus != focusView) {
-                oldFocus?.let {
-                    it.clearAnimation()
-                    val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration)
-                    it.startAnimation(anima)
-                }
+                oldFocus?.startAnimation(AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration))
                 this.oldFocus = SoftReference(focusView)
             }
         }

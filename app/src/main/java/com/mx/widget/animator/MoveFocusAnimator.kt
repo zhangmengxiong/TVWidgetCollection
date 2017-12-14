@@ -34,6 +34,7 @@ class MoveFocusAnimator : IBaseAnimator {
     private var mAnimatorSet: AnimatorSet? = null
 
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {
+        oldFocus?.get()?.clearAnimation()
         if (focusView == null) {
             floatView.visibility = View.GONE
             oldFocus = null
@@ -95,19 +96,14 @@ class MoveFocusAnimator : IBaseAnimator {
 
         focusView.bringToFront()
         if (scaleSize > 1f) {
-            val anima = AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration)
             focusView.clearAnimation()
-            focusView.startAnimation(anima)
+            focusView.startAnimation(AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration))
 
             val oldFocus = oldFocus?.get()
             if (oldFocus != focusView) {
-                oldFocus?.let {
-                    it.clearAnimation()
-                    val anima = AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration)
-                    it.startAnimation(anima)
-                }
-                this.oldFocus = SoftReference(focusView)
+                oldFocus?.startAnimation(AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration))
             }
+            this.oldFocus = SoftReference(focusView)
         }
 
         mAnimatorSet = AnimatorSet()
