@@ -85,11 +85,17 @@ class RecycleFocusActivity : Activity(), View.OnClickListener {
                 if (newFocus is RecyclerView) {
 
                 } else {
-                    newFocus?.let { focusView.setFocusView(it) }
+                    newFocus?.let {
+                        it.bringToFront()
+                        focusView.setFocusView(it)
+                    }
                 }
             }
             addOnScrollChangedListener {
-                rootLay.findFocus()?.let { focusView.setFocusView(it) }
+                rootLay.findFocus()?.let {
+                    it.bringToFront()
+                    focusView.setFocusView(it)
+                }
             }
         }
 //        recycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

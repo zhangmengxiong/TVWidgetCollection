@@ -19,23 +19,32 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
+            <TextView
                 android:id="@+id/verticalBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="横向" />
+                android:clickable="true"
+                android:focusable="true"
+                android:text="横向"
+                android:textSize="26sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/horizontalBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="竖向" />
+                android:clickable="true"
+                android:focusable="true"
+                android:text="竖向"
+                android:textSize="26sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/verticalx2Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="竖向2排" />
+                android:clickable="true"
+                android:focusable="true"
+                android:text="竖向2排"
+                android:textSize="26sp" />
 
         </LinearLayout>
 

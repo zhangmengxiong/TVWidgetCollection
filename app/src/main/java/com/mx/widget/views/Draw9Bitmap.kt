@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import kotlin.math.max
 import kotlin.math.min
 
 
@@ -11,9 +12,8 @@ import kotlin.math.min
  * 浮动焦点动态绘制背景阴影
  * Created by ZMX on 2017/12/12.
  */
-open class Draw9Bitmap @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+open class Draw9Bitmap @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+    : View(context, attrs, defStyleAttr) {
     private var mPaint: Paint? = null // 阴影画笔
     private var emptyPaint: Paint? = null // 圆角删除画笔
     private var strokeDelete: Paint? = null// 边缘锯齿删除画笔
@@ -34,16 +34,12 @@ open class Draw9Bitmap @JvmOverloads constructor(
     private var middleColor = Color.parseColor("#66000000") // 中间的颜色
     private var endColor = Color.TRANSPARENT // 结束的颜色
     private var mStrokeWidth: Float = 10f // 绘制边框的宽度
-    private var mRadiusWidth: Float = 0f // 绘制圆角的半径
-
+    private var mRadiusWidth: Float = 0.0f // 绘制圆角的半径
 
     /**
-     * 圆形的半径
+     * 四个角画圆形的半径
      */
     private var mLineMargin: Float = 0f
-        get() {
-            return mStrokeWidth + mRadiusWidth
-        }
 
     init {
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
@@ -66,7 +62,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
      * 设置边框的宽度
      */
     fun setStroke(w: Float) {
-        mStrokeWidth = w
+        if (w >= 0) mStrokeWidth = w
     }
 
     protected fun getStroke(): Float = mStrokeWidth
@@ -75,7 +71,7 @@ open class Draw9Bitmap @JvmOverloads constructor(
      * 设置圆角半径
      */
     fun setRadius(w: Float) {
-        mRadiusWidth = w
+        if (w >= 0f) mRadiusWidth = w
     }
 
     fun setColors(start: Int, middle: Int, end: Int) {
@@ -90,17 +86,23 @@ open class Draw9Bitmap @JvmOverloads constructor(
         }
     }
 
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        if (width * height <= 0) return
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        if (mLineMargin * 2 >= min(w, h)) {
-            // 边距判断
-            mRadiusWidth = min(w, h) / 2f - mStrokeWidth
-        }
-        initGradient(w, h)
+        initGradient(width, height)
+        drawCircle(canvas)
+        eraseCircle(canvas)
+        drawLine(canvas)
     }
 
     private fun initGradient(w: Int, h: Int) {
+        if ((mStrokeWidth + mRadiusWidth) * 2 >= min(w, h)) {
+            // 边距判断
+            mRadiusWidth = max((min(w, h) / 2f - mStrokeWidth), 0f)
+        }
+        mLineMargin = mStrokeWidth + mRadiusWidth
+
         var colors = IntArray(4)
         colors[0] = startColor
         colors[1] = startColor
@@ -132,13 +134,6 @@ open class Draw9Bitmap @JvmOverloads constructor(
         mTLinear = LinearGradient(mStrokeWidth, mStrokeWidth, mStrokeWidth, 0f, colors, floats, Shader.TileMode.REPEAT)
         mRLinear = LinearGradient(w - mStrokeWidth, mStrokeWidth, w.toFloat(), mStrokeWidth, colors, floats, Shader.TileMode.REPEAT)
         mBLinear = LinearGradient(mStrokeWidth, height - mStrokeWidth, mStrokeWidth, height.toFloat(), colors, floats, Shader.TileMode.REPEAT)
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        drawCircle(canvas)
-        eraseCircle(canvas)
-        drawLine(canvas)
     }
 
     /**

@@ -13,7 +13,7 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         rootLay.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
-            focusView.setFocusView(newFocus)
+            newFocus?.let { focusView?.setFocusView(it) }
         }
 
         recycleViewFocusTxv.setOnClickListener { startActivity(Intent(this, RecycleFocusActivity::class.java)) }

@@ -15,10 +15,9 @@ import com.mx.widget.animator.NoFocusAnimator
  * 创建时间： 2016-10-12.
  * 联系方式: zmx_final@163.com
  */
-
 class FocusDashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : Draw9Bitmap(context, attrs, defStyleAttr) {
-    private var mPaddingSpace = 0
+    private var mPaddingSpace = 0.0f
     private var mScale = 1.0f
     private var mDuration = 100L
     private var paddingRect: Rect? = null
@@ -27,11 +26,13 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
     init {
         initView(context)
         setStroke(20f)
-        setRadius(4f)
-        setColors(Color.parseColor("#00FFFF"), Color.parseColor("#7700FFFF"), Color.TRANSPARENT)
+        setRadius(0f)
+        setColors(Color.parseColor("#000000"), Color.parseColor("#77000000"), Color.TRANSPARENT)
         setColorsWeight(0.2f)
         baseAnimator = NoFocusAnimator()
         baseAnimator?.setAnimation(mScale, mDuration)
+
+        visibility = GONE
     }
 
     private fun initView(context: Context) {
@@ -44,7 +45,7 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
         baseAnimator = animator
     }
 
-    fun setPadding(i: Int) {
+    fun setPadding(i: Float) {
         mPaddingSpace = i
     }
 
@@ -62,7 +63,7 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
      */
     fun setFocusView(newFocus: View) {
         if (paddingRect == null) {
-            val size = getStroke().toInt() + mPaddingSpace
+            val size = (getStroke() + mPaddingSpace).toInt()
             paddingRect = Rect(size, size, size, size)
         }
         baseAnimator?.setAnimation(mScale, mDuration)
