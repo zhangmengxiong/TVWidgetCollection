@@ -47,7 +47,7 @@ class TVScrollView @JvmOverloads constructor(context: Context, attrs: AttributeS
         var fadingEdge = if (mFadingEdge > 0) mFadingEdge else 0
         if (centerInView) {
             val focusView = findFocus()
-            fadingEdge = width / 2 - (focusView?.width ?: 0) / 2
+            fadingEdge = height / 2 - (focusView?.height ?: 0) / 2
         }
 
         if (rect.top > 0) {

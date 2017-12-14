@@ -1,6 +1,7 @@
 package com.mx.widget.views
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.TextView
 
@@ -11,18 +12,16 @@ import android.widget.TextView
 
 class TVTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : TextView(context, attrs, defStyleAttr) {
-
     init {
-//        isSelectedOrFocused = false
-//
-//        ellipsize = TextUtils.TruncateAt.MARQUEE
-//        setSingleLine(true)
-//        isSelected = true
-//        isFocusable = false
-//        isFocusableInTouchMode = true
     }
 
     fun startMarquee() {
+        setSingleLine()
+        isFocusable = false
+        isFocusableInTouchMode = false
+        ellipsize = TextUtils.TruncateAt.MARQUEE
+        marqueeRepeatLimit = -1
+
         isSelected = true
         postInvalidate()
     }

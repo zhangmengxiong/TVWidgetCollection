@@ -30,17 +30,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="竖向" />
+
+            <Button
+                android:id="@+id/verticalx2Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="竖向2排" />
+
         </LinearLayout>
 
         <com.mx.widget.views.TVRecyclerView
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="20dp"
             android:layout_toRightOf="@+id/btnLay"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:focusable="false"
-            android:padding="20dp" />
+            android:focusable="false" />
     </RelativeLayout>
 
     <com.mx.widget.views.FocusDashView

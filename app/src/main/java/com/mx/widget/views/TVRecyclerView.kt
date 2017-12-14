@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
+import android.view.FocusFinder
 import android.view.KeyEvent
 import android.view.View
 
@@ -173,13 +174,34 @@ class TVRecyclerView @JvmOverloads constructor(
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
         val event = event ?: return super.dispatchKeyEvent(event)
         onKeyCall?.let {
-            if (event.action == KeyEvent.ACTION_DOWN
-                    && event.keyCode in arrayOf(KeyEvent.KEYCODE_DPAD_RIGHT,
-                    KeyEvent.KEYCODE_DPAD_DOWN,
-                    KeyEvent.KEYCODE_DPAD_LEFT,
-                    KeyEvent.KEYCODE_DPAD_UP)) {
-                if (it(event.keyCode)) {
-                    return true
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                when (event.keyCode) {
+                    KeyEvent.KEYCODE_DPAD_LEFT -> {
+                        val nextFocus = FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_LEFT)
+                        if (nextFocus == null && isViewToLeft() && it(event.keyCode)) {
+                            return true
+                        }
+                    }
+                    KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                        val nextFocus = FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_RIGHT)
+                        if (nextFocus == null && isViewToRight() && it(event.keyCode)) {
+                            return true
+                        }
+                    }
+                    KeyEvent.KEYCODE_DPAD_UP -> {
+                        val nextFocus = FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_UP)
+                        if (nextFocus == null && isViewToTop() && it(event.keyCode)) {
+                            return true
+                        }
+                    }
+                    KeyEvent.KEYCODE_DPAD_DOWN -> {
+                        val nextFocus = FocusFinder.getInstance().findNextFocus(this, focusedChild, View.FOCUS_DOWN)
+                        if (nextFocus == null && isViewToBottom() && it(event.keyCode)) {
+                            return true
+                        }
+                    }
+                    else -> {
+                    }
                 }
             }
         }
@@ -229,6 +251,55 @@ class TVRecyclerView @JvmOverloads constructor(
             return lm.canScrollVertically()
         }
         return false
+    }
+
+    /**
+     * 判断滚动是否到最顶部
+     */
+    private fun isViewToTop(): Boolean {
+        val manager = layoutManager ?: return true
+        if (manager.itemCount == 0) {
+            return true
+        }
+        val firstView = getChildAt(0)
+        if (firstView.top <= 0) return true
+
+        return !canScrollVertically(-1)
+    }
+
+    /**
+     * 判断是否滚动到最底部
+     */
+    private fun isViewToBottom(): Boolean {
+        val manager = layoutManager ?: return true
+        if (manager.itemCount == 0) {
+            return false
+        }
+        return !canScrollVertically(1)
+    }
+
+    /**
+     * 判断是否滚动到最左侧
+     */
+    private fun isViewToLeft(): Boolean {
+        val manager = layoutManager ?: return true
+        if (manager.itemCount == 0) {
+            return true
+        }
+
+        return !canScrollHorizontally(-1)
+    }
+
+    /**
+     * 判断是否滚动到最右侧
+     */
+    private fun isViewToRight(): Boolean {
+        val manager = layoutManager ?: return true
+        if (manager.itemCount == 0) {
+            return false
+        }
+
+        return !canScrollHorizontally(1)
     }
 
     private var onKeyCall: ((keyCode: Int) -> Boolean)? = null

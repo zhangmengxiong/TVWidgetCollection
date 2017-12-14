@@ -3,6 +3,7 @@ package com.mx.widget.activity
 import android.app.Activity
 import android.graphics.Rect
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.recycle_focus_activity.*
 /**
  * Created by ZMX on 2017/12/11.
  */
-class RecycleFocusActivity : Activity() {
+class RecycleFocusActivity : Activity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recycle_focus_activity)
@@ -102,12 +103,7 @@ class RecycleFocusActivity : Activity() {
 
 //        focusView.setBaseAnimator(MoveFocusAnimator())
 
-        verticalBtn.setOnClickListener {
-            val gridlayoutManager = LinearLayoutManager(this)
-            gridlayoutManager.orientation = LinearLayoutManager.VERTICAL
-            recycleView.setLayoutManager(gridlayoutManager)
-            recycleView.adapter = adapter
-        }
+        verticalBtn.setOnClickListener(this)
         verticalBtn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
@@ -127,16 +123,15 @@ class RecycleFocusActivity : Activity() {
                     verticalBtn.requestFocus()
                     true
                 }
+                KeyEvent.KEYCODE_DPAD_DOWN -> {
+                    verticalx2Btn.requestFocus()
+                    true
+                }
                 else -> false
             }
         }
 
-        horizontalBtn.setOnClickListener {
-            val gridlayoutManager = LinearLayoutManager(this)
-            gridlayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            recycleView.setLayoutManager(gridlayoutManager)
-            recycleView.adapter = adapter
-        }
+        horizontalBtn.setOnClickListener(this)
         horizontalBtn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
@@ -148,5 +143,34 @@ class RecycleFocusActivity : Activity() {
         }
 
         focusView.setBaseAnimator(MoveFocusAnimator())
+        focusView.setScale(1.05f, 150L)
+
+        verticalx2Btn.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            verticalBtn -> {
+                val gridlayoutManager = LinearLayoutManager(this)
+                gridlayoutManager.orientation = LinearLayoutManager.VERTICAL
+                recycleView.layoutManager = gridlayoutManager
+                recycleView?.adapter = recycleView?.adapter
+            }
+            horizontalBtn -> {
+                val gridlayoutManager = LinearLayoutManager(this)
+                gridlayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                recycleView.layoutManager = gridlayoutManager
+                recycleView?.adapter = recycleView?.adapter
+            }
+            verticalx2Btn -> {
+                val gridlayoutManager = GridLayoutManager(this, 5)
+                gridlayoutManager.orientation = GridLayoutManager.VERTICAL
+                recycleView.layoutManager = gridlayoutManager
+                recycleView?.adapter = recycleView?.adapter
+            }
+
+            else -> {
+            }
+        }
     }
 }
