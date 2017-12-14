@@ -6,12 +6,16 @@ import android.view.View
 import android.widget.FrameLayout
 
 /**
- * 如果有控件放大被挡住，可以使用 MainLayout,
- * 它继承于 FrameLayout.
- * 使用方式就和FrameLayout是一样的
- * 如果你其它的控件也被挡住了，但是这里没有，你可以使用WidgetTvViewBring
+ * 功能：
+ * 1：子View可以超出界限
+ * 2：子View调用bringToFront()时，当前ViewGroup会将这个View排列到最后一个来Drawing，防止子View被容器内其他View挡住！
  *
- * @author hailongqiu
+ * 实现说明：
+ * isChildrenDrawingOrderEnabled = true // 设置在这个ViewGroup内需要重新排序画子View的顺序
+ * bringChildToFront() 重载：将front的View的Index找到并存储
+ * getChildDrawingOrder() 重载：获取子View的绘制顺序，将需要显示在最前的子View放在最后一个Drawing
+ *
+ * @author zmx_final@163.com
  */
 class TVFrameLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr) {

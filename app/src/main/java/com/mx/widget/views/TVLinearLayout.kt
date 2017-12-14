@@ -6,10 +6,16 @@ import android.view.View
 import android.widget.LinearLayout
 
 /**
- * 如果有控件放大被挡住，可以使用 TVLinearLayout,
- * 它继承于 LinearLayout.
- * 使用方式和LinerLayout是一样的
- * @author hailongqiu
+ * 功能：
+ * 1：子View可以超出界限
+ * 2：子View调用bringToFront()时，当前ViewGroup会将这个View排列到最后一个来Drawing，防止子View被容器内其他View挡住！
+ *
+ * 实现说明：
+ * isChildrenDrawingOrderEnabled = true // 设置在这个ViewGroup内需要重新排序画子View的顺序
+ * bringChildToFront() 重载：将front的View的Index找到并存储
+ * getChildDrawingOrder() 重载：获取子View的绘制顺序，将需要显示在最前的子View放在最后一个Drawing
+ *
+ * @author zmx_final@163.com
  */
 class TVLinearLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr) {

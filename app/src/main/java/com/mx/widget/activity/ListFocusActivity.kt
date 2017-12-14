@@ -13,6 +13,14 @@ import kotlinx.android.synthetic.main.list_focus_activity.*
 
 
 /**
+ * ListView 的Item无法获取焦点，但是可以通过setSelectItem()来设置选中项
+ * 1：监听全局addOnGlobalFocusChangeListener 焦点变化监听
+ * 2：监听全局addOnScrollChangedListener 滚动变化监听
+ * 3：监听ListView：setOnItemSelectedListener 监听ListView选中变化
+ *
+ * 需要注意的点：
+ * 1：ListView的SelectedView可能为空
+ *
  * Created by ZMX on 2017/12/11.
  */
 class ListFocusActivity : Activity() {
@@ -71,7 +79,7 @@ class ListFocusActivity : Activity() {
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    listView.setDefualtSelect(98)
+                    listView.setDefaultSelect(98)
                     listView.post { listView.requestFocus() }
                     true
                 }
