@@ -60,7 +60,20 @@ class NoFocusAnimator : IBaseAnimator {
             0
         }
 
-        if (left == layoutParams.leftMargin && top == layoutParams.topMargin && floatView.visibility == View.VISIBLE) {
+        val oldWidth = layoutParams.width
+        val oldHeight = layoutParams.height
+        if (left == layoutParams.leftMargin
+                && top == layoutParams.topMargin
+                && oldWidth == newWidth
+                && oldHeight == newHeight
+                && oldFocus?.get() == focusView
+                && floatView.visibility == View.VISIBLE) {
+            layoutParams.leftMargin = left
+            layoutParams.topMargin = top
+            layoutParams.width = newWidth
+            layoutParams.height = newHeight
+            floatView.layoutParams = layoutParams
+            floatView.postInvalidate()
             return
         }
 

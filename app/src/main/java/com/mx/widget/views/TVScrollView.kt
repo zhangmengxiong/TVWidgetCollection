@@ -7,15 +7,8 @@ import android.widget.ScrollView
 
 /**
  * 当你使用滚动窗口焦点错乱的时候，就可以使用这个控件.
- *
- *
  * 使用方法和滚动窗口是一样的，具体查看DEMO吧.
- *
- *
  * 如果想改变滚动的系数，R.dimen.fading_edge
- *
- *
- *
  * @author hailongqiu
  */
 class TVScrollView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -78,4 +71,21 @@ class TVScrollView @JvmOverloads constructor(context: Context, attrs: AttributeS
         return scrollYDelta
     }
 
+    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+        super.onScrollChanged(l, t, oldl, oldt)
+        scrollCall?.onScrollChanged(l, t, oldl, oldt)
+    }
+
+    private var scrollCall: ScrollCall? = null
+
+    /**
+     * 设置监听
+     */
+    fun setOnScrollListener(call: ScrollCall?) {
+        scrollCall = call
+    }
+
+    interface ScrollCall {
+        fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int)
+    }
 }

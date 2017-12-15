@@ -41,10 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:ellipsize="marquee"
-                android:focusable="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true"
                 android:text="1231231231231231231231231231   3123123" />
         </RelativeLayout>
     </com.mx.widget.views.TVFrameLayout>

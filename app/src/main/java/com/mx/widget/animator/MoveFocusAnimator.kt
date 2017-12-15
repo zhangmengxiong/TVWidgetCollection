@@ -41,6 +41,7 @@ class MoveFocusAnimator : IBaseAnimator {
             return
         }
         val layoutParams = floatView.layoutParams as FrameLayout.LayoutParams
+
         val p = IntArray(2)
         focusView.getLocationOnScreen(p)
 
@@ -68,14 +69,29 @@ class MoveFocusAnimator : IBaseAnimator {
             0
         }
 
-        if (left == layoutParams.leftMargin && top == layoutParams.topMargin && floatView.visibility == View.VISIBLE) {
+        if (left == layoutParams.leftMargin
+                && top == layoutParams.topMargin
+                && oldWidth == newWidth
+                && oldHeight == newHeight
+                && oldFocus?.get() == focusView
+                && floatView.visibility == View.VISIBLE) {
+            /**
+             * 重复位移校验
+             * 当新的位移和旧的位移位置、大小一致，且焦点View一样时，不作处理！
+             */
+
+            layoutParams.leftMargin = left
+            layoutParams.topMargin = top
+            layoutParams.width = newWidth
+            layoutParams.height = newHeight
+            floatView.layoutParams = layoutParams
+            floatView.postInvalidate()
             return
         }
 
         val needReset = floatView.visibility != View.VISIBLE
         floatView.visibility = View.VISIBLE
-        if (mAnimatorSet != null)
-            mAnimatorSet!!.cancel()
+        mAnimatorSet?.cancel()
         floatView.clearAnimation()
 
         val transAnimatorX: ObjectAnimator
@@ -115,7 +131,7 @@ class MoveFocusAnimator : IBaseAnimator {
     /**
      * 用於放大的view
      */
-    private inner class ScaleView internal constructor(private val view: View) {
+    private class ScaleView(private val view: View) {
         private var width: Int = 0
         private var height: Int = 0
 

@@ -31,10 +31,6 @@ class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: 
         centerInView = c
     }
 
-    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
-        super.onScrollChanged(l, t, oldl, oldt)
-    }
-
     override fun computeScrollDeltaToGetChildRectOnScreen(rect: Rect): Int {
         if (childCount == 0)
             return 0
@@ -100,4 +96,21 @@ class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: 
         return scrollXDelta
     }
 
+    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+        super.onScrollChanged(l, t, oldl, oldt)
+        scrollCall?.onScrollChanged(l, t, oldl, oldt)
+    }
+
+    private var scrollCall: ScrollCall? = null
+
+    /**
+     * 设置监听
+     */
+    fun setOnScrollListener(call: ScrollCall?) {
+        scrollCall = call
+    }
+
+    interface ScrollCall {
+        fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int)
+    }
 }

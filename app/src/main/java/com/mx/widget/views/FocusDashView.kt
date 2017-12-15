@@ -27,7 +27,7 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
         initView(context)
         setStroke(20f)
         setRadius(0f)
-        setColors(Color.parseColor("#000000"), Color.parseColor("#77000000"), Color.TRANSPARENT)
+        setColors(Color.parseColor("#3F51B5"), Color.parseColor("#773F51B5"), Color.parseColor("#003F51B5"))
         setColorsWeight(0.2f)
         baseAnimator = NoFocusAnimator()
         baseAnimator?.setAnimation(mScale, mDuration)

@@ -92,12 +92,25 @@ class RecycleFocusActivity : Activity(), View.OnClickListener {
                 }
             }
             addOnScrollChangedListener {
+                println("addOnScrollChangedListener")
                 rootLay.findFocus()?.let {
-                    it.bringToFront()
+                    //                    it.bringToFront()
                     focusView.setFocusView(it)
                 }
             }
         }
+
+        /**
+         * 4.0.4系统上测试，addOnScrollChangedListener失效，需要加载滚动监听！
+         */
+        recycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                rootLay.findFocus()?.let {
+                    focusView.setFocusView(it)
+                }
+            }
+        })
 //        recycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 //            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
 //                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -149,7 +162,7 @@ class RecycleFocusActivity : Activity(), View.OnClickListener {
         }
 
         focusView.setBaseAnimator(MoveFocusAnimator())
-        focusView.setScale(1.05f, 150L)
+        focusView.setScale(1.1f, 150L)
 
         verticalx2Btn.setOnClickListener(this)
     }
