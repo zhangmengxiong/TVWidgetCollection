@@ -109,8 +109,4 @@ class TVHorizontalScrollView @JvmOverloads constructor(context: Context, attrs: 
     fun setOnScrollListener(call: ScrollCall?) {
         scrollCall = call
     }
-
-    interface ScrollCall {
-        fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int)
-    }
 }

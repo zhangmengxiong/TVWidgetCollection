@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import com.mx.widget.R
 import com.mx.widget.adapts.MyListAdapt
 import com.mx.widget.animator.MoveFocusAnimator
+import com.mx.widget.views.ScrollCall
 import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.list_focus_activity.*
 
@@ -73,10 +74,31 @@ class ListFocusActivity : Activity() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 view?.let { focusView.setFocusView(it) }
+
+                /**
+                 * 这一句是滚动到中间~
+                 */
+                listView.smoothScrollToPositionFromTop(position,
+                        /**
+                         * 滚动到position时距离顶部的距离
+                         * （ListView的高度减去Item的高度）/2
+                         */
+                        (listView.height - (view?.height ?: 0)) / 2)
             }
         }
+
+        /**
+         * 添加对ListView的滚动监听，防止出现焦点错位
+         */
+        listView.setOnScrollListener(object : ScrollCall {
+            override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+                if (listView.hasFocus()) {
+                    listView.selectedView?.let { focusView.setFocusView(it) }
+                }
+            }
+        })
         focusView.setBaseAnimator(MoveFocusAnimator())
-        focusView.setScale(1.01f, 150)
+        focusView.setScale(1.05f, 150)
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {

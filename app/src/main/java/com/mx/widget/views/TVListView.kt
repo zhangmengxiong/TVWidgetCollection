@@ -56,4 +56,18 @@ class TVListView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         requestFocusFromTouch()
         setSelection(pos)
     }
+
+    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+        super.onScrollChanged(l, t, oldl, oldt)
+        scrollCall?.onScrollChanged(l, t, oldl, oldt)
+    }
+
+    private var scrollCall: ScrollCall? = null
+
+    /**
+     * 设置监听
+     */
+    fun setOnScrollListener(call: ScrollCall?) {
+        scrollCall = call
+    }
 }
