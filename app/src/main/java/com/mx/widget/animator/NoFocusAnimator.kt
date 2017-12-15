@@ -26,73 +26,75 @@ class NoFocusAnimator : IBaseAnimator {
     }
 
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {
-        oldFocus?.get()?.clearAnimation()
+        synchronized(this) {
+            oldFocus?.get()?.clearAnimation()
 
-        if (focusView == null) {
-            floatView.visibility = View.GONE
-            oldFocus = null
-            return
-        }
-        val layoutParams = floatView.layoutParams as FrameLayout.LayoutParams
+            if (focusView == null) {
+                floatView.visibility = View.GONE
+                oldFocus = null
+                return
+            }
+            val layoutParams = floatView.layoutParams as FrameLayout.LayoutParams
 
-        val p = IntArray(2)
-        focusView.getLocationOnScreen(p)
+            val p = IntArray(2)
+            focusView.getLocationOnScreen(p)
 
-        val newWidth = focusView.width + paddingRect.left + paddingRect.right + if (scaleSize > 1) {
-            (focusView.width * (scaleSize - 1)).toInt()
-        } else {
-            0
-        }
-        val newHeight = focusView.height + paddingRect.top + paddingRect.bottom + if (scaleSize > 1) {
-            (focusView.height * (scaleSize - 1)).toInt()
-        } else {
-            0
-        }
+            val newWidth = focusView.width + paddingRect.left + paddingRect.right + if (scaleSize > 1) {
+                (focusView.width * (scaleSize - 1)).toInt()
+            } else {
+                0
+            }
+            val newHeight = focusView.height + paddingRect.top + paddingRect.bottom + if (scaleSize > 1) {
+                (focusView.height * (scaleSize - 1)).toInt()
+            } else {
+                0
+            }
 
-        val left = p[0] - paddingRect.left - if (scaleSize > 1) {
-            (focusView.width * (scaleSize - 1) / 2f).toInt()
-        } else {
-            0
-        }
-        val top = p[1] - paddingRect.top - if (scaleSize > 1) {
-            (focusView.height * (scaleSize - 1) / 2f).toInt()
-        } else {
-            0
-        }
+            val left = p[0] - paddingRect.left - if (scaleSize > 1) {
+                (focusView.width * (scaleSize - 1) / 2f).toInt()
+            } else {
+                0
+            }
+            val top = p[1] - paddingRect.top - if (scaleSize > 1) {
+                (focusView.height * (scaleSize - 1) / 2f).toInt()
+            } else {
+                0
+            }
 
-        val oldWidth = layoutParams.width
-        val oldHeight = layoutParams.height
-        if (left == layoutParams.leftMargin
-                && top == layoutParams.topMargin
-                && oldWidth == newWidth
-                && oldHeight == newHeight
-                && oldFocus?.get() == focusView
-                && floatView.visibility == View.VISIBLE) {
+            val oldWidth = layoutParams.width
+            val oldHeight = layoutParams.height
+            if (left == layoutParams.leftMargin
+                    && top == layoutParams.topMargin
+                    && oldWidth == newWidth
+                    && oldHeight == newHeight
+                    && oldFocus?.get() == focusView
+                    && floatView.visibility == View.VISIBLE) {
+                layoutParams.leftMargin = left
+                layoutParams.topMargin = top
+                layoutParams.width = newWidth
+                layoutParams.height = newHeight
+                floatView.layoutParams = layoutParams
+                floatView.postInvalidate()
+                return
+            }
+
+            if (scaleSize > 1f) {
+                focusView.clearAnimation()
+                focusView.startAnimation(AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration))
+
+                val oldFocus = oldFocus?.get()
+                if (oldFocus != focusView) {
+                    oldFocus?.startAnimation(AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration))
+                    this.oldFocus = SoftReference(focusView)
+                }
+            }
+
             layoutParams.leftMargin = left
             layoutParams.topMargin = top
             layoutParams.width = newWidth
             layoutParams.height = newHeight
             floatView.layoutParams = layoutParams
-            floatView.postInvalidate()
-            return
+            floatView.visibility = View.VISIBLE
         }
-
-        if (scaleSize > 1f) {
-            focusView.clearAnimation()
-            focusView.startAnimation(AnimationBiz.createIncreaseScaleAnimation(scaleSize, scaleDuration))
-
-            val oldFocus = oldFocus?.get()
-            if (oldFocus != focusView) {
-                oldFocus?.startAnimation(AnimationBiz.createDecreaseScaleAnimation(scaleSize, scaleDuration))
-                this.oldFocus = SoftReference(focusView)
-            }
-        }
-
-        layoutParams.leftMargin = left
-        layoutParams.topMargin = top
-        layoutParams.width = newWidth
-        layoutParams.height = newHeight
-        floatView.layoutParams = layoutParams
-        floatView.visibility = View.VISIBLE
     }
 }

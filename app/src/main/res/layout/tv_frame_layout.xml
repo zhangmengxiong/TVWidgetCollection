@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/item_bg"
             android:focusable="true"
             android:text="123123" />
 
@@ -24,7 +24,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="200dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/item_bg"
             android:focusable="true"
             android:text="123123" />
 
@@ -59,112 +59,127 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
@@ -187,112 +202,128 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_bg"
                 android:focusable="true"
                 android:text="123123" />
 

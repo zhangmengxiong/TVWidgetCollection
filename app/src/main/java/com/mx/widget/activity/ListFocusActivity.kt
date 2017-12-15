@@ -76,7 +76,7 @@ class ListFocusActivity : Activity() {
             }
         }
         focusView.setBaseAnimator(MoveFocusAnimator())
-        focusView.setScale(1.1f, 50)
+        focusView.setScale(1.01f, 150)
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
