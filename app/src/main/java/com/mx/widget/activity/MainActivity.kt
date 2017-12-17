@@ -15,11 +15,13 @@ class MainActivity : Activity() {
         rootLay.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
             newFocus?.let { focusView?.setFocusView(it) }
         }
-
+        gridViewLayoutTxv.setOnClickListener { startActivity(Intent(this, GridViewFocusActivity::class.java)) }
         recycleViewFocusTxv.setOnClickListener { startActivity(Intent(this, RecycleFocusActivity::class.java)) }
         listFocusTxv.setOnClickListener { startActivity(Intent(this, ListFocusActivity::class.java)) }
         globalFocusTxv.setOnClickListener { startActivity(Intent(this, GlobalFocusViewActivity::class.java)) }
         tvFrameLayoutTxv.setOnClickListener { startActivity(Intent(this, TVFrameLayoutActivity::class.java)) }
-        tvFrameLayoutTxv.requestFocus()
+
+        tvHorizontalScrollView.setFocusCenterInViewGroup(true)
+        globalFocusTxv.requestFocus()
     }
 }

@@ -2,7 +2,9 @@ package com.mx.widget.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.GridView
+import java.lang.ref.SoftReference
 
 /**
  * 功能：
@@ -17,24 +19,28 @@ import android.widget.GridView
  * @author zmx_final@163.com
  */
 class TVGridView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : GridView(context, attrs) {
+    private var frontChildView: SoftReference<View>? = null
 
     init {
         this.isChildrenDrawingOrderEnabled = true
-        clipChildren = false
-        clipToPadding = false
+//        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
+//        clipToPadding = false // 是否限制到边框
     }
 
-    override fun isInTouchMode(): Boolean {
-        return !(hasFocus() && !super.isInTouchMode())
+    override fun bringChildToFront(child: View) {
+        frontChildView = SoftReference(child)
+        postInvalidate()
     }
 
     override fun getChildDrawingOrder(childCount: Int, i: Int): Int {
-        if (this.selectedItemPosition != -1) {
-            if (i + this.firstVisiblePosition == this.selectedItemPosition) {// 这是原本要在最后一个刷新的item
-                return childCount - 1
+        val front = frontChildView?.get() ?: return i
+        val frontChildIndex = indexOfChild(front)
+        if (frontChildIndex >= 0) {
+            if (i == childCount - 1) {
+                return frontChildIndex
             }
-            if (i == childCount - 1) {// 这是最后一个需要刷新的item
-                return this.selectedItemPosition - this.firstVisiblePosition
+            if (frontChildIndex == i) {
+                return childCount - 1
             }
         }
         return i
@@ -43,8 +49,22 @@ class TVGridView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     /**
      * 设置默认选中项
      */
-    fun setDefualtSelect(pos: Int) {
+    fun setDefaultSelect(pos: Int) {
         requestFocusFromTouch()
         setSelection(pos)
+    }
+
+    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+        super.onScrollChanged(l, t, oldl, oldt)
+        tvScrollCall?.onScrollChanged(l, t, oldl, oldt)
+    }
+
+    private var tvScrollCall: TVScrollCall? = null
+
+    /**
+     * 设置监听
+     */
+    fun setOnTVScrollListener(callTV: TVScrollCall?) {
+        tvScrollCall = callTV
     }
 }

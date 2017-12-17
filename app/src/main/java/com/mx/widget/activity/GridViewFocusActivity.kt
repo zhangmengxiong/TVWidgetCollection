@@ -11,7 +11,7 @@ import com.mx.widget.adapts.MyListAdapt
 import com.mx.widget.animator.MoveFocusAnimator
 import com.mx.widget.views.TVScrollCall
 import com.mx.widget.views.setOnKey
-import kotlinx.android.synthetic.main.list_focus_activity.*
+import kotlinx.android.synthetic.main.gridview_focus_activity.*
 
 
 /**
@@ -26,10 +26,10 @@ import kotlinx.android.synthetic.main.list_focus_activity.*
  *
  * Created by ZMX on 2017/12/11.
  */
-class ListFocusActivity : Activity() {
+class GridViewFocusActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_focus_activity)
+        setContentView(R.layout.gridview_focus_activity)
 
         rootLay.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
             if (newFocus is AbsListView) {
@@ -66,34 +66,36 @@ class ListFocusActivity : Activity() {
             list.add(it.toString())
         }
         val adapter = MyListAdapt(list)
-        listView.adapter = adapter
-        listView.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        tvGridView.adapter = adapter
+        tvGridView.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 //                        focusView.visibility = View.GONE
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                view?.let { focusView.setFocusView(it) }
+                view?.let {
+                    it.bringToFront()
+                    focusView.setFocusView(it) }
 
                 /**
                  * 这一句是滚动到中间~
                  */
-                listView.smoothScrollToPositionFromTop(position,
+                tvGridView.smoothScrollToPositionFromTop(position,
                         /**
                          * 滚动到position时距离顶部的距离
                          * （ListView的高度减去Item的高度）/2
                          */
-                        (listView.height - (view?.height ?: 0)) / 2)
+                        (tvGridView.height - (view?.height ?: 0)) / 2)
             }
         }
 
         /**
          * 添加对ListView的滚动监听，防止出现焦点错位
          */
-        listView.setOnTVScrollListener(object : TVScrollCall {
+        tvGridView.setOnTVScrollListener(object : TVScrollCall {
             override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
-                if (listView.hasFocus()) {
-                    listView.selectedView?.let { focusView.setFocusView(it) }
+                if (tvGridView.hasFocus()) {
+                    tvGridView.selectedView?.let { focusView.setFocusView(it) }
                 }
             }
         })
@@ -102,8 +104,8 @@ class ListFocusActivity : Activity() {
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    listView.setDefaultSelect(98)
-                    listView.post { listView.requestFocus() }
+                    tvGridView.setDefaultSelect(98)
+                    tvGridView.post { tvGridView.requestFocus() }
                     true
                 }
                 else -> {

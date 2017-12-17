@@ -20,8 +20,8 @@ class TVRelativeLayout @JvmOverloads constructor(context: Context, attrs: Attrib
     init {
         this.isChildrenDrawingOrderEnabled = true
         frontChildIndex = -1
-        clipChildren = false
-        clipToPadding = false
+//        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
+//        clipToPadding = false // 是否限制到边框
     }
 
     override fun bringChildToFront(child: View) {

@@ -24,8 +24,8 @@ class TVLinearLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     init {
         this.isChildrenDrawingOrderEnabled = true
         frontChildIndex = -1
-        clipChildren = false
-        clipToPadding = false
+//        clipChildren = false
+//        clipToPadding = false
     }
 
     override fun bringChildToFront(child: View) {

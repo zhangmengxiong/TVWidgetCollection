@@ -19,8 +19,8 @@ class TVScrollView @JvmOverloads constructor(context: Context, attrs: AttributeS
     init {
         mFadingEdge = 0
         centerInView = true
-        clipChildren = false
-        clipToPadding = false
+//        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
+//        clipToPadding = false // 是否限制到边框
     }
 
     fun setFadingEdge(fadingEdge: Int) {
@@ -73,15 +73,15 @@ class TVScrollView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         super.onScrollChanged(l, t, oldl, oldt)
-        scrollCall?.onScrollChanged(l, t, oldl, oldt)
+        TVScrollCall?.onScrollChanged(l, t, oldl, oldt)
     }
 
-    private var scrollCall: ScrollCall? = null
+    private var TVScrollCall: TVScrollCall? = null
 
     /**
      * 设置监听
      */
-    fun setOnScrollListener(call: ScrollCall?) {
-        scrollCall = call
+    fun setOnScrollListener(callTV: TVScrollCall?) {
+        TVScrollCall = callTV
     }
 }

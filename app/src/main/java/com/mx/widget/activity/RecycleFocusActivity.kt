@@ -94,7 +94,7 @@ class RecycleFocusActivity : Activity(), View.OnClickListener {
             addOnScrollChangedListener {
                 println("addOnScrollChangedListener")
                 rootLay.findFocus()?.let {
-                    //                    it.bringToFront()
+                    it.bringToFront()
                     focusView.setFocusView(it)
                 }
             }

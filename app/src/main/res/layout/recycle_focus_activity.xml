@@ -12,7 +12,7 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <LinearLayout
+        <com.mx.widget.views.TVLinearLayout
             android:id="@+id/btnLay"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -46,7 +46,7 @@
                 android:text="竖向2排"
                 android:textSize="26sp" />
 
-        </LinearLayout>
+        </com.mx.widget.views.TVLinearLayout>
 
         <com.mx.widget.views.TVRecyclerView
             android:id="@+id/recycleView"

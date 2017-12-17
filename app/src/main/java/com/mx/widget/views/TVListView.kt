@@ -1,9 +1,10 @@
 package com.mx.widget.views
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
+import android.view.View
 import android.widget.ListView
+import java.lang.ref.SoftReference
 
 /**
  * 功能：
@@ -19,39 +20,36 @@ import android.widget.ListView
  */
 class TVListView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : ListView(context, attrs, defStyleAttr) {
-    /**
-     * 崩溃了.
-     */
-    override fun dispatchDraw(canvas: Canvas) {
-        try {
-            super.dispatchDraw(canvas)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+    private var frontChildView: SoftReference<View>? = null
 
     init {
         this.isChildrenDrawingOrderEnabled = true
-        clipChildren = false
-        clipToPadding = false
+//        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
+//        clipToPadding = false // 是否限制到边框
     }
 
-    override fun isInTouchMode(): Boolean {
-        return !(hasFocus() && !super.isInTouchMode())
+    override fun bringChildToFront(child: View) {
+        frontChildView = SoftReference(child)
+        postInvalidate()
     }
 
     override fun getChildDrawingOrder(childCount: Int, i: Int): Int {
-        if (this.selectedItemPosition != -1) {
-            if (i + this.firstVisiblePosition == this.selectedItemPosition) {// 这是原本要在最后一个刷新的item
-                return childCount - 1
+        val front = frontChildView?.get() ?: return i
+        val frontChildIndex = indexOfChild(front)
+        if (frontChildIndex >= 0) {
+            if (i == childCount - 1) {
+                return frontChildIndex
             }
-            if (i == childCount - 1) {// 这是最后一个需要刷新的item
-                return this.selectedItemPosition - this.firstVisiblePosition
+            if (frontChildIndex == i) {
+                return childCount - 1
             }
         }
         return i
     }
 
+    /**
+     * 设置默认选中项
+     */
     fun setDefaultSelect(pos: Int) {
         requestFocusFromTouch()
         setSelection(pos)
@@ -59,15 +57,15 @@ class TVListView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         super.onScrollChanged(l, t, oldl, oldt)
-        scrollCall?.onScrollChanged(l, t, oldl, oldt)
+        tvScrollCall?.onScrollChanged(l, t, oldl, oldt)
     }
 
-    private var scrollCall: ScrollCall? = null
+    private var tvScrollCall: TVScrollCall? = null
 
     /**
      * 设置监听
      */
-    fun setOnScrollListener(call: ScrollCall?) {
-        scrollCall = call
+    fun setOnTVScrollListener(callTV: TVScrollCall?) {
+        tvScrollCall = callTV
     }
 }

@@ -24,8 +24,8 @@ class TVFrameLayout @JvmOverloads constructor(context: Context, attrs: Attribute
     init {
         this.isChildrenDrawingOrderEnabled = true
         frontChildIndex = -1
-        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
-        clipToPadding = false // 是否限制到边框
+//        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
+//        clipToPadding = false // 是否限制到边框
     }
 
     override fun bringChildToFront(child: View) {

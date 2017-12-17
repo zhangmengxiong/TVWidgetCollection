@@ -4,52 +4,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.mx.widget.views.TVScrollView
+        android:id="@+id/tvHorizontalScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/globalFocusTxv"
+        <com.mx.widget.views.TVLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="8dp"
-            android:focusable="true"
-            android:text="全局移动焦点！" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/listFocusTxv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="8dp"
-            android:focusable="true"
-            android:text="ListView焦点处理！" />
 
-        <Button
-            android:id="@+id/recycleViewFocusTxv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="8dp"
-            android:focusable="true"
-            android:text="RecycleView焦点处理！" />
+            <Button
+                android:id="@+id/globalFocusTxv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="全局移动焦点！" />
 
-        <Button
-            android:id="@+id/tvFrameLayoutTxv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="8dp"
-            android:focusable="true"
-            android:text="FrameLayout焦点处理！" />
+            <Button
+                android:id="@+id/listFocusTxv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="ListView焦点处理！" />
 
-        <com.mx.widget.views.Draw9Bitmap
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/recycleViewFocusTxv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="RecycleView焦点处理！" />
+
+            <Button
+                android:id="@+id/tvFrameLayoutTxv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="FrameLayout焦点处理！" />
+
+            <Button
+                android:id="@+id/gridViewLayoutTxv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="GridView焦点处理！" />
+        </com.mx.widget.views.TVLinearLayout>
+    </com.mx.widget.views.TVScrollView>
 
     <com.mx.widget.views.FocusDashView
         android:id="@+id/focusView"

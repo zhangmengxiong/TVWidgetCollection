@@ -22,16 +22,15 @@ import android.view.View
  *
  * @author zmx_final@163.com
  */
-class TVRecyclerView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr) {
+class TVRecyclerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+    : RecyclerView(context, attrs, defStyleAttr) {
     private var frontChildIndex = -1
 
     init {
         isChildrenDrawingOrderEnabled = true
         frontChildIndex = -1
-        clipChildren = false
-        clipToPadding = false
+//        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
+//        clipToPadding = false // 是否限制到边框
     }
 
     /**
