@@ -3,6 +3,7 @@ package com.mx.widget.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ListView
 import java.lang.ref.SoftReference
 
@@ -21,11 +22,15 @@ import java.lang.ref.SoftReference
 class TVListView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : ListView(context, attrs, defStyleAttr) {
     private var frontChildView: SoftReference<View>? = null
+    private var centerInView: Boolean = false
+    private var itemSelectListener: OnItemSelectedListener? = null
+
 
     init {
         this.isChildrenDrawingOrderEnabled = true
 //        clipChildren = false // 是否限制子View超出当前ViewGroup的绘制
 //        clipToPadding = false // 是否限制到边框
+        onItemSelectedListener = null
     }
 
     override fun bringChildToFront(child: View) {
@@ -45,6 +50,34 @@ class TVListView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             }
         }
         return i
+    }
+
+    override fun setOnItemSelectedListener(listener: OnItemSelectedListener?) {
+        itemSelectListener = listener
+        super.setOnItemSelectedListener(object : OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                itemSelectListener?.onNothingSelected(parent)
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                itemSelectListener?.onItemSelected(parent, view, position, id)
+
+                if (centerInView) {
+                    /**
+                     * 这一句是滚动到中间~
+                     *
+                     * 滚动到position时距离顶部的距离
+                     * （ListView的高度减去Item的高度）/2
+                     */
+                    smoothScrollToPositionFromTop(position,
+                            (height - (view?.height ?: 0)) / 2)
+                }
+            }
+        })
+    }
+
+    fun setFocusCenterInViewGroup(c: Boolean) {
+        centerInView = c
     }
 
     /**

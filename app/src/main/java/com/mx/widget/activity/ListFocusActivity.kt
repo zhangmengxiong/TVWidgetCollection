@@ -73,19 +73,13 @@ class ListFocusActivity : Activity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                view?.let { focusView.setFocusView(it) }
-
-                /**
-                 * 这一句是滚动到中间~
-                 */
-                listView.smoothScrollToPositionFromTop(position,
-                        /**
-                         * 滚动到position时距离顶部的距离
-                         * （ListView的高度减去Item的高度）/2
-                         */
-                        (listView.height - (view?.height ?: 0)) / 2)
+                view?.let {
+                    it.bringToFront()
+                    focusView.setFocusView(it)
+                }
             }
         }
+        listView.setFocusCenterInViewGroup(true)
 
         /**
          * 添加对ListView的滚动监听，防止出现焦点错位
@@ -98,7 +92,7 @@ class ListFocusActivity : Activity() {
             }
         })
         focusView.setBaseAnimator(MoveFocusAnimator())
-        focusView.setScale(1.05f, 150)
+        focusView.setScale(1.1f, 150)
         btn.setOnKey {
             when (it) {
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {

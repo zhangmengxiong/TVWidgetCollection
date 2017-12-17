@@ -75,19 +75,11 @@ class GridViewFocusActivity : Activity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 view?.let {
                     it.bringToFront()
-                    focusView.setFocusView(it) }
-
-                /**
-                 * 这一句是滚动到中间~
-                 */
-                tvGridView.smoothScrollToPositionFromTop(position,
-                        /**
-                         * 滚动到position时距离顶部的距离
-                         * （ListView的高度减去Item的高度）/2
-                         */
-                        (tvGridView.height - (view?.height ?: 0)) / 2)
+                    focusView.setFocusView(it)
+                }
             }
         }
+//        tvGridView.setFocusCenterInViewGroup(true)
 
         /**
          * 添加对ListView的滚动监听，防止出现焦点错位
