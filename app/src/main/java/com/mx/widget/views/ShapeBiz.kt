@@ -1,9 +1,6 @@
 package com.mx.widget.views
 
-import android.content.Context
 import android.graphics.*
-import android.util.AttributeSet
-import android.view.View
 import kotlin.math.max
 import kotlin.math.min
 
@@ -11,10 +8,9 @@ import kotlin.math.min
  * Created by ZMX on 2017/12/18.
  */
 
-open class BaseDrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : View(context, attrs, defStyleAttr) {
-    protected fun drawShadeCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float,
-                                  colors: IntArray, positions: FloatArray, lineWidth: Float, eraseCircle: Boolean = true) {
+object ShapeBiz {
+    fun drawShadeCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float,
+                        colors: IntArray, positions: FloatArray, lineWidth: Float, eraseCircle: Boolean = true) {
         if (colors.isEmpty() || colors.size != positions.size) return
         var radius = radius
 
@@ -30,16 +26,16 @@ open class BaseDrawView @JvmOverloads constructor(context: Context, attrs: Attri
             /**
              * 画4条边得渐变效果
              */
-            mPaint.shader = LinearGradient(left + lineWidth, top + lineWidth, left, top + lineWidth, colors, positions, Shader.TileMode.CLAMP)
+            mPaint.shader = LinearGradient(lineWidth, 0f, 0f, 0f, colors, positions, Shader.TileMode.CLAMP)
             canvas.drawRect(left, top + ch, lineWidth, bottom - ch, mPaint)
 
-            mPaint.shader = LinearGradient(left + lineWidth, top + lineWidth, left + lineWidth, top, colors, positions, Shader.TileMode.CLAMP)
+            mPaint.shader = LinearGradient(0f, lineWidth, 0f, 0f, colors, positions, Shader.TileMode.CLAMP)
             canvas.drawRect(left + ch, top, right - ch, top + lineWidth, mPaint)
 
-            mPaint.shader = LinearGradient(right - lineWidth, lineWidth, right, lineWidth, colors, positions, Shader.TileMode.CLAMP)
+            mPaint.shader = LinearGradient(right - lineWidth, 0f, right, 0f, colors, positions, Shader.TileMode.CLAMP)
             canvas.drawRect(right - lineWidth, top + ch, right, bottom - ch, mPaint)
 
-            mPaint.shader = LinearGradient(lineWidth, bottom - lineWidth, lineWidth, bottom, colors, positions, Shader.TileMode.CLAMP)
+            mPaint.shader = LinearGradient(0f, bottom - lineWidth, 0f, bottom, colors, positions, Shader.TileMode.CLAMP)
             canvas.drawRect(left + ch, bottom - lineWidth, right - ch, bottom, mPaint)
         }
 
@@ -90,7 +86,7 @@ open class BaseDrawView @JvmOverloads constructor(context: Context, attrs: Attri
     /**
      * 删除圆形中多余的部分和边缘锯齿！
      */
-    protected fun eraseCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float, lineWidth: Float) {
+    fun eraseCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float, lineWidth: Float) {
         if (radius <= 0) return
 
         val ch = radius + lineWidth
@@ -111,7 +107,7 @@ open class BaseDrawView @JvmOverloads constructor(context: Context, attrs: Attri
     /**
      * 画一个圆角线条圓圈
      */
-    protected fun drawLineCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float, color: Int, lineWidth: Float) {
+    fun drawLineCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float, color: Int, lineWidth: Float) {
         val radius = if (radius >= 0) radius else 0f
         val ch = radius + lineWidth
         val paint = Paint()

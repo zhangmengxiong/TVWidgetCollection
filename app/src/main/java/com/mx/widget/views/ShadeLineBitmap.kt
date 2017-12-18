@@ -1,11 +1,9 @@
 package com.mx.widget.views
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
 import android.util.AttributeSet
-import android.view.View
-import kotlin.math.max
-import kotlin.math.min
 
 /**
  * Created by ZMX on 2017/12/18.
@@ -31,7 +29,7 @@ open class ShadeLineBitmap @JvmOverloads constructor(context: Context, attrs: At
         super.onDraw(canvas)
         if (width * height <= 0) return
 
-        drawLineCircle(canvas, strokeWidth, strokeWidth, width - strokeWidth, height - strokeWidth
+        ShapeBiz.drawLineCircle(canvas, strokeWidth, strokeWidth, width - strokeWidth, height - strokeWidth
                 , mRadius, Color.BLUE, lineWidth)
     }
 

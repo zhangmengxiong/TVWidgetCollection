@@ -1,11 +1,10 @@
 package com.mx.widget.views
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
-import kotlin.math.max
-import kotlin.math.min
 
 
 /**
@@ -13,19 +12,13 @@ import kotlin.math.min
  * Created by ZMX on 2017/12/12.
  */
 open class ShadeBitmap @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : BaseDrawView(context, attrs, defStyleAttr) {
-
+    : View(context, attrs, defStyleAttr) {
     private var colorsWeight = 0.3f //渐变颜色权重,0..1之间
     private var startColor = Color.parseColor("#000000") // 开始的颜色
     private var middleColor = Color.parseColor("#66000000") // 中间的颜色
     private var endColor = Color.TRANSPARENT // 结束的颜色
     private var mStrokeWidth: Float = 10f // 绘制边框的宽度
     private var mRadiusWidth: Float = 0.0f // 绘制圆角的半径
-
-    /**
-     * 四个角画圆形的半径
-     */
-    private var mLineMargin: Float = 0f
 
     init {
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
@@ -72,6 +65,6 @@ open class ShadeBitmap @JvmOverloads constructor(context: Context, attrs: Attrib
         positions[0] = 0f
         positions[1] = colorsWeight
         positions[2] = 1f
-        drawShadeCircle(canvas, 0f, 0f, width.toFloat(), height.toFloat(), mRadiusWidth, colors, positions, mStrokeWidth)
+        ShapeBiz.drawShadeCircle(canvas, 0f, 0f, width.toFloat(), height.toFloat(), mRadiusWidth, colors, positions, mStrokeWidth)
     }
 }
