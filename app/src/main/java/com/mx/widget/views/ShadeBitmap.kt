@@ -62,7 +62,7 @@ open class ShadeBitmap @JvmOverloads constructor(context: Context, attrs: Attrib
      * 设置边框的宽度
      */
     open fun setStroke(w: Float) {
-        if (w >= 0) mStrokeWidth = w
+        mStrokeWidth = if (w >= 0) w else 0f
     }
 
     protected fun getStroke(): Float = mStrokeWidth
@@ -71,8 +71,10 @@ open class ShadeBitmap @JvmOverloads constructor(context: Context, attrs: Attrib
      * 设置圆角半径
      */
     open fun setRadius(w: Float) {
-        if (w >= 0f) mRadiusWidth = w
+        mRadiusWidth = if (w >= 0f) w else 0f
     }
+
+    fun getRadius() = mRadiusWidth
 
     fun setColors(start: Int, middle: Int, end: Int) {
         startColor = start
