@@ -22,7 +22,7 @@ class MainActivity : Activity() {
         tvFrameLayoutTxv.setOnClickListener { startActivity(Intent(this, TVFrameLayoutActivity::class.java)) }
         recycleView2FocusTxv.setOnClickListener { startActivity(Intent(this, Recycle2FocusActivity::class.java)) }
 
-        shadeLineBitmap.setRadius(50f)
+        shadeLineBitmap.setRadius(100f)
         shadeLineBitmap.setStroke(100f)
         focusView.setRadius(5f)
 

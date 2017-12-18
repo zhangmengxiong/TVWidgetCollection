@@ -107,7 +107,7 @@ object ShapeBiz {
     /**
      * 画一个圆角线条圓圈
      */
-    fun drawLineCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float, color: Int, lineWidth: Float) {
+    fun drawLineCircle(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, radius: Float, color: Int, lineWidth: Float, eraseCircle: Boolean = true) {
         val radius = if (radius >= 0) radius else 0f
         val ch = radius + lineWidth
         val paint = Paint()
@@ -139,15 +139,16 @@ object ShapeBiz {
             canvas.drawArc(rect, 0f, 90f, true, paint)
 
 
-            paint.color = Color.TRANSPARENT
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-            paint.shader = RadialGradient(radius, radius, radius, color, color, Shader.TileMode.CLAMP)
-
-            // 左上角1/4圆
-            canvas.drawCircle(left + ch, top + ch, radius, paint)
-            canvas.drawCircle(right - ch, top + ch, radius, paint)
-            canvas.drawCircle(left + ch, bottom - ch, radius, paint)
-            canvas.drawCircle(right - ch, bottom - ch, radius, paint)
+            if (eraseCircle) {
+                paint.color = Color.TRANSPARENT
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                paint.shader = RadialGradient(radius, radius, radius, color, color, Shader.TileMode.CLAMP)
+                // 左上角1/4圆
+                canvas.drawCircle(left + ch, top + ch, radius, paint)
+                canvas.drawCircle(right - ch, top + ch, radius, paint)
+                canvas.drawCircle(left + ch, bottom - ch, radius, paint)
+                canvas.drawCircle(right - ch, bottom - ch, radius, paint)
+            }
         } else {
             // 角度<=0时，填充四个角
             canvas.drawRect(left, top, left + lineWidth, top + ch, paint)
