@@ -12,8 +12,7 @@ class GlobalFocusViewActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_global_focus_view)
-        window.decorView
-
+        focusView.setRadius(5f)
         focusView.visibility = View.GONE
         focusView.setBaseAnimator(MoveFocusAnimator())
         with(rootLay.viewTreeObserver) {

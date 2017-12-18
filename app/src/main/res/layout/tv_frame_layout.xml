@@ -2,9 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootLay"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false">
+    android:layout_height="match_parent">
 
 
     <com.mx.widget.views.TVFrameLayout
@@ -49,12 +47,16 @@
         android:id="@+id/tvHorizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp">
+        android:layout_marginTop="200dp"
+        android:clipToPadding="false">
 
         <com.mx.widget.views.TVLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:padding="40dp">
 
             <TextView
                 android:layout_width="100dp"
@@ -192,12 +194,15 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="320dp"
-        android:padding="20dp">
+        android:clipToPadding="false">
 
         <com.mx.widget.views.TVLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="40dp">
 
             <TextView
                 android:layout_width="100dp"
@@ -330,7 +335,7 @@
         </com.mx.widget.views.TVLinearLayout>
     </com.mx.widget.views.TVScrollView>
 
-    <com.mx.widget.views.FocusDashView
+    <com.mx.widget.views.FocusFloatView
         android:id="@+id/focusView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

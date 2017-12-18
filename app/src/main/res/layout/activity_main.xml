@@ -43,6 +43,15 @@
                 android:text="RecycleView焦点处理！" />
 
             <Button
+                android:id="@+id/recycleView2FocusTxv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="RecycleView2焦点处理！" />
+
+            <Button
                 android:id="@+id/tvFrameLayoutTxv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,10 +68,15 @@
                 android:layout_marginTop="8dp"
                 android:focusable="true"
                 android:text="GridView焦点处理！" />
+
+            <com.mx.widget.views.ShadeLineBitmap
+                android:id="@+id/shadeLineBitmap"
+                android:layout_width="300dp"
+                android:layout_height="300dp" />
         </com.mx.widget.views.TVLinearLayout>
     </com.mx.widget.views.TVScrollView>
 
-    <com.mx.widget.views.FocusDashView
+    <com.mx.widget.views.FocusFloatView
         android:id="@+id/focusView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

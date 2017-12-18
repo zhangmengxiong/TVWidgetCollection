@@ -15,8 +15,8 @@ import com.mx.widget.animator.NoFocusAnimator
  * 创建时间： 2016-10-12.
  * 联系方式: zmx_final@163.com
  */
-class FocusDashView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : Draw9Bitmap(context, attrs, defStyleAttr) {
+class FocusFloatView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+    : ShadeLineBitmap(context, attrs, defStyleAttr) {
     private var mPaddingSpace = 0.0f
     private var mScale = 1.0f
     private var mDuration = 100L
@@ -24,7 +24,10 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
     private var baseAnimator: IBaseAnimator? = null
 
     init {
-        initView(context)
+        isFocusable = false
+        isClickable = false
+        isFocusableInTouchMode = false
+
         setStroke(20f)
         setRadius(0f)
         setColors(Color.parseColor("#3F51B5"), Color.parseColor("#773F51B5"), Color.parseColor("#003F51B5"))
@@ -33,12 +36,6 @@ class FocusDashView @JvmOverloads constructor(context: Context, attrs: Attribute
         baseAnimator?.setAnimation(mScale, mDuration)
 
         visibility = GONE
-    }
-
-    private fun initView(context: Context) {
-        isFocusable = false
-        isClickable = false
-        isFocusableInTouchMode = false
     }
 
     fun setBaseAnimator(animator: IBaseAnimator) {

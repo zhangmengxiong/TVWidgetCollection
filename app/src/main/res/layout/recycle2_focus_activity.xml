@@ -3,8 +3,15 @@
     android:id="@+id/rootLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     android:clipChildren="false"
     android:clipToPadding="false">
+
+    <com.mx.widget.views.FocusBGView
+        android:id="@+id/focusView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#88ffffff" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -58,10 +65,4 @@
             android:clipToPadding="false"
             android:focusable="false" />
     </RelativeLayout>
-
-    <com.mx.widget.views.FocusFloatView
-        android:id="@+id/focusView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 </FrameLayout>

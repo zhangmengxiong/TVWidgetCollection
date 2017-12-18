@@ -21,6 +21,7 @@
         <activity android:name=".activity.RecycleFocusActivity" />
         <activity android:name=".activity.TVFrameLayoutActivity" />
         <activity android:name=".activity.GridViewFocusActivity" />
+        <activity android:name=".activity.Recycle2FocusActivity" />
     </application>
 
 </manifest>

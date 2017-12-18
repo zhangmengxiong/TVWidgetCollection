@@ -20,6 +20,10 @@ class MainActivity : Activity() {
         listFocusTxv.setOnClickListener { startActivity(Intent(this, ListFocusActivity::class.java)) }
         globalFocusTxv.setOnClickListener { startActivity(Intent(this, GlobalFocusViewActivity::class.java)) }
         tvFrameLayoutTxv.setOnClickListener { startActivity(Intent(this, TVFrameLayoutActivity::class.java)) }
+        recycleView2FocusTxv.setOnClickListener { startActivity(Intent(this, Recycle2FocusActivity::class.java)) }
+
+        shadeLineBitmap.setRadius(10f)
+        shadeLineBitmap.setStroke(50f)
 
         tvHorizontalScrollView.setFocusCenterInViewGroup(true)
         globalFocusTxv.requestFocus()

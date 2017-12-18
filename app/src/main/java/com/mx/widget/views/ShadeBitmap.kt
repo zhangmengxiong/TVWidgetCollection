@@ -12,7 +12,7 @@ import kotlin.math.min
  * 浮动焦点动态绘制背景阴影
  * Created by ZMX on 2017/12/12.
  */
-open class Draw9Bitmap @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+open class ShadeBitmap @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : View(context, attrs, defStyleAttr) {
     private var mPaint: Paint? = null // 阴影画笔
     private var emptyPaint: Paint? = null // 圆角删除画笔
@@ -61,7 +61,7 @@ open class Draw9Bitmap @JvmOverloads constructor(context: Context, attrs: Attrib
     /**
      * 设置边框的宽度
      */
-    fun setStroke(w: Float) {
+    open fun setStroke(w: Float) {
         if (w >= 0) mStrokeWidth = w
     }
 
@@ -70,7 +70,7 @@ open class Draw9Bitmap @JvmOverloads constructor(context: Context, attrs: Attrib
     /**
      * 设置圆角半径
      */
-    fun setRadius(w: Float) {
+    open fun setRadius(w: Float) {
         if (w >= 0f) mRadiusWidth = w
     }
 
