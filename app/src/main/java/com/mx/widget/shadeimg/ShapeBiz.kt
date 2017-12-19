@@ -1,4 +1,4 @@
-package com.mx.widget.views
+package com.mx.widget.shadeimg
 
 import android.graphics.*
 import kotlin.math.max

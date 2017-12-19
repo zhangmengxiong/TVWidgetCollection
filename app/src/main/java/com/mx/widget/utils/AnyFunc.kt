@@ -1,11 +1,19 @@
-package com.mx.widget.views
+package com.mx.widget.utils
 
 import android.view.KeyEvent
 import android.view.View
 
 /**
- * Created by ZMX on 2017/12/12.
+ * 内联方法定义类
+ * Created by ZMX on 2017/12/7.
  */
+val Any.TAG: String
+    get() = this::class.java.simpleName
+
+inline fun <reified T> T.Log(log: Any) {
+    android.util.Log.v(T::class.java.simpleName, log.toString())
+}
+
 fun View.setOnKey(action: (keyCode: Int) -> Boolean) {
     this.setOnKeyListener { v, keyCode, event ->
         var result = false

@@ -9,8 +9,8 @@ import android.widget.AdapterView
 import com.mx.widget.R
 import com.mx.widget.adapts.MyListAdapt
 import com.mx.widget.animator.MoveFocusAnimator
+import com.mx.widget.utils.setOnKey
 import com.mx.widget.views.TVScrollCall
-import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.gridview_focus_activity.*
 
 

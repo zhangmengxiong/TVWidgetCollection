@@ -16,7 +16,7 @@ import com.mx.widget.animator.NoFocusAnimator
  * 联系方式: zmx_final@163.com
  */
 class FocusFloatView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : ShadeLineBitmap(context, attrs, defStyleAttr) {
+    : ShadeBitmap(context, attrs, defStyleAttr) {
     private var mPaddingSpace = 0.0f
     private var mScale = 1.0f
     private var mDuration = 100L

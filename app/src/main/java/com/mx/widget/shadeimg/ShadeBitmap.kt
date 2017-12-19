@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
-import com.mx.widget.views.ShapeBiz
 
 
 /**

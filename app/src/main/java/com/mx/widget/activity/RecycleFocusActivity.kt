@@ -13,9 +13,9 @@ import android.widget.TextView
 import com.mx.widget.R
 import com.mx.widget.adapts.MyRecycleAdapt
 import com.mx.widget.animator.MoveFocusAnimator
+import com.mx.widget.utils.setOnKey
 import com.mx.widget.views.TVRecyclerView
 import com.mx.widget.views.TVTextView
-import com.mx.widget.views.setOnKey
 import kotlinx.android.synthetic.main.recycle_focus_activity.*
 
 /**
