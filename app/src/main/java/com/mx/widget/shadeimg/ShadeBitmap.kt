@@ -1,10 +1,11 @@
-package com.mx.widget.views
+package com.mx.widget.shadeimg
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
+import com.mx.widget.views.ShapeBiz
 
 
 /**
@@ -13,6 +14,7 @@ import android.view.View
  */
 open class ShadeBitmap @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : View(context, attrs, defStyleAttr) {
+
     private var colorsWeight = 0.3f //渐变颜色权重,0..1之间
     private var startColor = Color.parseColor("#000000") // 开始的颜色
     private var middleColor = Color.parseColor("#66000000") // 中间的颜色
@@ -31,7 +33,7 @@ open class ShadeBitmap @JvmOverloads constructor(context: Context, attrs: Attrib
         mStrokeWidth = if (w >= 0) w else 0f
     }
 
-    protected fun getStroke(): Float = mStrokeWidth
+    open fun getStroke(): Float = mStrokeWidth
 
     /**
      * 设置圆角半径

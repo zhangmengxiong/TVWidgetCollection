@@ -78,7 +78,7 @@ object ShapeBiz {
             canvas.drawArc(rect, 0f, 90f, true, mPaint)
         }
 
-        if (eraseCircle) {
+        if (eraseCircle && radius > 0) {
             eraseCircle(canvas, left, top, right, bottom, radius, lineWidth)
         }
     }
@@ -113,6 +113,7 @@ object ShapeBiz {
         val paint = Paint()
         paint.isAntiAlias = true
         paint.color = color
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
 
         canvas.drawRect(left, top + ch, left + lineWidth, bottom - ch, paint)
         canvas.drawRect(left + ch, top, right - ch, top + lineWidth, paint)

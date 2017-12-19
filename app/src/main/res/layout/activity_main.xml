@@ -69,14 +69,14 @@
                 android:focusable="true"
                 android:text="GridView焦点处理！" />
 
-            <com.mx.widget.views.ShadeLineBitmap
+            <com.mx.widget.shadeimg.ShadeLineBitmap
                 android:id="@+id/shadeLineBitmap"
                 android:layout_width="300dp"
                 android:layout_height="300dp" />
         </com.mx.widget.views.TVLinearLayout>
     </com.mx.widget.views.TVScrollView>
 
-    <com.mx.widget.views.FocusFloatView
+    <com.mx.widget.shadeimg.FocusFloatView
         android:id="@+id/focusView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

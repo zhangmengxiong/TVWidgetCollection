@@ -30,7 +30,7 @@
             android:dividerHeight="2dp" />
     </RelativeLayout>
 
-    <com.mx.widget.views.FocusFloatView
+    <com.mx.widget.shadeimg.FocusFloatView
         android:id="@+id/focusView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
