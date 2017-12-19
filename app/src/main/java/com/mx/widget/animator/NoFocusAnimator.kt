@@ -15,6 +15,10 @@ import kotlin.math.max
 
 class NoFocusAnimator : IBaseAnimator {
     override fun setMoveDuration(duration: Long) = Unit
+    override fun cancelAnimator() {
+        oldFocus?.get()?.clearAnimation()
+        oldFocus = null
+    }
 
     private var scaleSize: Float = 1.3f
     private var scaleDuration = 100L

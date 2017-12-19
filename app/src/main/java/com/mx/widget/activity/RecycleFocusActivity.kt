@@ -98,6 +98,11 @@ class RecycleFocusActivity : Activity(), View.OnClickListener {
                     focusView.setFocusView(it)
                 }
             }
+            addOnTouchModeChangeListener {
+                if (it) {
+                    focusView.hide()
+                }
+            }
         }
 
         /**

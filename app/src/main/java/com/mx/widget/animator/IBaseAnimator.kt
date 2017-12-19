@@ -15,4 +15,5 @@ interface IBaseAnimator {
     fun setAnimation(scale: Float, duration: Long)
 
     fun setMoveDuration(duration: Long)
+    fun cancelAnimator()
 }

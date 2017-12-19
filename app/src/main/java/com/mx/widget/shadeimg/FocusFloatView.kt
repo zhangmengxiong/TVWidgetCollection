@@ -67,4 +67,9 @@ class FocusFloatView @JvmOverloads constructor(context: Context, attrs: Attribut
         baseAnimator?.setMoveDuration(mDuration)
         baseAnimator?.setOnFocusView(newFocus, this, paddingRect!!)
     }
+
+    fun hide() {
+        baseAnimator?.cancelAnimator()
+        visibility = View.GONE
+    }
 }

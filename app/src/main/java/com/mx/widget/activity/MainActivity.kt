@@ -15,6 +15,11 @@ class MainActivity : Activity() {
         rootLay.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
             newFocus?.let { focusView?.setFocusView(it) }
         }
+        rootLay.viewTreeObserver.addOnTouchModeChangeListener {
+            if (it) {
+                focusView.hide()
+            }
+        }
         gridViewLayoutTxv.setOnClickListener { startActivity(Intent(this, GridViewFocusActivity::class.java)) }
         recycleViewFocusTxv.setOnClickListener { startActivity(Intent(this, RecycleFocusActivity::class.java)) }
         listFocusTxv.setOnClickListener { startActivity(Intent(this, ListFocusActivity::class.java)) }
@@ -25,8 +30,11 @@ class MainActivity : Activity() {
         shadeLineBitmap.setRadius(0f)
         shadeLineBitmap.setStroke(100f)
         focusView.setRadius(0f)
+        focusView.setScale(1.05f, 150)
 
         tvHorizontalScrollView.setFocusCenterInViewGroup(true)
         globalFocusTxv.requestFocus()
     }
+
+
 }

@@ -31,6 +31,11 @@ class MoveFocusAnimator : IBaseAnimator {
         moveDuration = duration
     }
 
+    override fun cancelAnimator() {
+        oldFocus?.get()?.clearAnimation()
+        oldFocus = null
+    }
+
     private var mAnimatorSet: AnimatorSet? = null
 
     override fun setOnFocusView(focusView: View?, floatView: View, paddingRect: Rect) {
